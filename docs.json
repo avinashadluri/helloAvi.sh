@@ -11,39 +11,54 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Home",
+        "groups": [
+          {
+            "group": "Welcome",
+            "pages": ["introduction", "about"]
+          }
+        ]
+      },
+      {
         "tab": "Dev",
         "groups": [
           {
-            "group": "Get Started",
-            "pages": ["introduction", "quickstart", "development"]
+            "group": "Development",
+            "pages": [
+              "dev/web-development",
+              "dev/mobile-development",
+              "dev/devops",
+              "dev/tools-and-setup"
+            ]
           },
           {
-            "group": "Essentials",
+            "group": "Best Practices",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "dev/coding-standards",
+              "dev/architecture-patterns",
+              "dev/testing-strategies"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Tech",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
+            "group": "Technology Insights",
+            "pages": [
+              "tech/emerging-technologies",
+              "tech/cloud-computing",
+              "tech/data-engineering",
+              "tech/security"
+            ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Industry Trends",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "tech/tech-trends",
+              "tech/startup-ecosystem",
+              "tech/innovation"
             ]
           }
         ]
@@ -52,15 +67,67 @@
         "tab": "AI",
         "groups": [
           {
-            "group": "Get Started",
-            "pages": ["quickstart"]
+            "group": "AI & Machine Learning",
+            "pages": [
+              "ai/machine-learning",
+              "ai/deep-learning",
+              "ai/nlp",
+              "ai/computer-vision"
+            ]
           },
           {
-            "group": "Essentials",
+            "group": "AI Applications",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "ai/generative-ai",
+              "ai/ai-in-business",
+              "ai/ai-ethics",
+              "ai/ai-tools"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Frontend",
+        "groups": [
+          {
+            "group": "Frontend Frameworks",
+            "pages": [
+              "frontend/react",
+              "frontend/nextjs",
+              "frontend/vue",
+              "frontend/angular"
+            ]
+          },
+          {
+            "group": "Frontend Technologies",
+            "pages": [
+              "frontend/javascript",
+              "frontend/typescript",
+              "frontend/css-frameworks",
+              "frontend/ui-ux"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Backend",
+        "groups": [
+          {
+            "group": "Backend Technologies",
+            "pages": [
+              "backend/nodejs",
+              "backend/python",
+              "backend/databases",
+              "backend/apis"
+            ]
+          },
+          {
+            "group": "Infrastructure",
+            "pages": [
+              "backend/cloud-platforms",
+              "backend/microservices",
+              "backend/containerization",
+              "backend/monitoring"
             ]
           }
         ]
