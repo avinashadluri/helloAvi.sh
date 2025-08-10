@@ -169,9 +169,17 @@
               "australia/transport-getting-around",
               "australia/education-system",
               "australia/emergency-services",
-              "australia/useful-apps-services",
-              "australia/reframe-brain"
+              "australia/useful-apps-services"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Books",
+        "groups": [
+          {
+            "group": "Summaries",
+            "pages": ["books/reframe-brain"]
           }
         ]
       }
