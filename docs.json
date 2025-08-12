@@ -104,7 +104,8 @@
           {
             "group": "Guides",
             "pages": [
-              "ai/guides/claude-code"
+              "ai/guides/claude-code",
+              "ai/guides/openai-sdk"
             ]
           }
         ]

@@ -1,0 +1,415 @@
+---
+title: "OpenAI SDK: The Complete Guide"
+description: "Setup → Realtime → Production"
+icon: "code"
+---
+
+# OpenAI SDK: The Complete Guide (Setup → Realtime → Production)
+
+This guide shows how to install and use the official OpenAI SDK (JS/TS), build real‑time apps, stream responses, call tools, work with images/audio/files, and ship production‑ready agents—end to end.
+
+⸻
+
+1) What is the OpenAI SDK?
+
+The OpenAI SDK is the official TypeScript/JavaScript client for calling the OpenAI API from Node.js, Deno, or Bun. It provides a typed OpenAI client and first‑class helpers for the Responses API (unified text/vision/audio interface), Assistants API, tools like File Search, Code Interpreter, Function (tool) calling, Images, Embeddings, and the Realtime API.  
+
+Key concepts you’ll meet:
+- Responses API – the unified way to chat, stream, call tools, do structured JSON output, image gen, and more. It’s the default path for most new builds.  
+- Assistants API (v2) – higher‑level conversational state + built‑in tools (Code Interpreter, File Search, Function calling) when you want OpenAI to manage threads/runs.  
+- Realtime API – low‑latency, full‑duplex (WebRTC/WebSocket) audio + text for live voice UIs and co‑pilot style apps.  
+
+⸻
+
+2) Installing and setting up
+
+Prereqs
+- Node 18+ (or Deno/Bun), an OpenAI account, and an API key set as OPENAI_API_KEY.  
+
+Install (Node/TS)
+
+```bash
+npm i openai
+# or: pnpm add openai  |  bun add openai  |  deno add npm:openai
+```
+
+Initialize the client:
+
+```ts
+// src/lib/openai.ts
+import OpenAI from "openai";
+export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+```
+
+Set your key:
+
+```bash
+# .env
+OPENAI_API_KEY=sk-your-key
+```
+
+Docs reference for install & env:  
+
+⸻
+
+3) Quick start: “Hello, Responses API”
+
+```ts
+import { openai } from "./lib/openai";
+
+const resp = await openai.responses.create({
+  model: "gpt-4o-mini",              // fast, cost‑efficient default
+  input: "In one paragraph, explain WebAuthn like I’m 12."
+});
+
+console.log(resp.output_text);
+```
+
+The Responses API unifies text/vision/audio and supports multi‑turn, tool use, and streaming.  
+Model guidance (4o / 4o‑mini etc.):  
+
+⸻
+
+4) Streaming tokens (server → SSE)
+
+```ts
+const stream = await openai.responses.stream({
+  model: "gpt-4o",
+  input: "Stream a step-by-step plan to learn TypeScript in 7 days."
+});
+
+for await (const event of stream) {
+  if (event.type === "response.output_text.delta") {
+    process.stdout.write(event.delta);
+  }
+}
+```
+
+Streaming lowers latency and improves UX for long generations.  
+
+⸻
+
+5) Structured JSON outputs (strongly typed)
+
+```ts
+const schema = {
+  type: "object",
+  properties: {
+    title: { type: "string" },
+    difficulty: { enum: ["easy", "medium", "hard"] },
+    steps: { type: "array", items: { type: "string" } }
+  },
+  required: ["title", "steps", "difficulty"],
+} as const;
+
+const resp = await openai.responses.create({
+  model: "gpt-4o-mini",
+  input: "Create a cooking recipe for 2 people.",
+  response_format: { type: "json_schema", json_schema: schema }
+});
+
+const data = resp.output[0].content[0].json; // guaranteed to match schema
+```
+
+Structured Outputs ensure the model adheres to your JSON Schema—no missing keys or invalid enums. Great for APIs/agents.  
+
+⸻
+
+6) Tool (Function) calling
+
+Give the model callable tools; it will return arguments you execute in your app.
+
+```ts
+const tools = [
+  {
+    type: "function",
+    name: "getWeather",
+    description: "Get weather by city",
+    parameters: { type: "object", properties: { city: { type: "string" } }, required: ["city"] }
+  }
+];
+
+const r = await openai.responses.create({
+  model: "gpt-4o-mini",
+  input: "Is it jacket weather in Sydney?",
+  tools
+});
+
+if (r.output[0].type === "tool_call") {
+  const call = r.output[0].tool_calls[0];
+  if (call?.name === "getWeather") {
+    const args = call.arguments as { city: string };
+    const temp = await getWeather(args.city); // your function
+    const followup = await openai.responses.create({
+      model: "gpt-4o-mini",
+      input: [{ role: "system", content: `Temp in ${args.city} is ${temp}°C` }]
+    });
+    console.log(followup.output_text);
+  }
+}
+```
+
+Tool calling lets models decide when and how to hit your functions—core for “agentic” workflows.  
+
+⸻
+
+7) File Search (RAG without the plumbing)
+
+```ts
+// 1) Upload files (once) via API or dashboard; then:
+const answer = await openai.responses.create({
+  model: "gpt-4o",
+  input: "Summarize the refund policy for premium users.",
+  tools: [{ type: "file_search" }]
+});
+console.log(answer.output_text);
+```
+
+File Search provides semantic/keyword retrieval over your uploaded files directly inside Responses API.  
+
+⸻
+
+8) Images & Vision (analyze + generate)
+
+Analyze an image:
+
+```ts
+const vision = await openai.responses.create({
+  model: "gpt-4o",
+  input: [
+    { role: "user", content: [
+      { type: "input_text", text: "Describe this UI and suggest improvements." },
+      { type: "input_image", image_url: "https://example.com/screenshot.png" }
+    ]}
+  ]
+});
+console.log(vision.output_text);
+```
+
+Generate an image (within Responses API):
+
+```ts
+const img = await openai.responses.create({
+  model: "gpt-image-1",
+  input: "A minimal, geometric fox logo"
+});
+// img.output[0].content[0].image: bytes / file id per docs
+```
+
+Vision accepts image inputs; gpt-image-1 supports generation and iterative edits in Responses.  
+
+⸻
+
+9) Audio: STT and TTS
+
+Text → Speech (TTS):
+
+```ts
+const tts = await openai.audio.speech.create({
+  model: "gpt-4o-mini-tts",
+  voice: "alloy",
+  input: "Welcome to our product demo!"
+});
+// Save tts arraybuffer to .mp3 or .wav
+```
+
+Speech → Text (STT) is also supported via audio endpoints/models in the platform docs.  
+
+⸻
+
+10) Realtime API (WebRTC/WebSocket)
+
+Build live voice copilots that hear, think, and speak with ~instant turn‑taking.
+
+Browser (WebRTC) sketch:
+
+```ts
+// Client: get ephemeral token from your server, then:
+const pc = new RTCPeerConnection();
+const data = await fetch("/api/realtime-token").then(r => r.json()); // your server issues tokens
+const offer = await pc.createOffer();
+await pc.setLocalDescription(offer);
+
+const sdpResponse = await fetch("https://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${data.ephemeral}` },
+  body: offer.sdp
+});
+const answer = { type: "answer", sdp: await sdpResponse.text() };
+await pc.setRemoteDescription(answer);
+```
+
+Use cases: voice agents, live meeting copilots, multiplayer tutoring, tool‑augmented live copilots. See Realtime + WebRTC guides for auth, audio tracks, and events.  
+
+⸻
+
+11) Assistants API vs Responses API—when to use what?
+- Use Responses API if you want full control of state, custom tool orchestration, streaming, and a single interface for text/vision/audio + built‑in tools (web/file search, images, computer use, etc.). It’s the recommended default going forward.  
+- Use Assistants API (v2) if you prefer OpenAI‑managed threads/runs, and built‑in tools like Code Interpreter (Python sandbox) and File Search with minimal state wiring.  
+
+⸻
+
+12) Framework‑ready snippets
+
+Next.js (App Router) API route
+
+```ts
+// app/api/ai/route.ts
+import OpenAI from "openai";
+export const runtime = "nodejs";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export async function POST(req: Request) {
+  const { prompt } = await req.json();
+  const r = await openai.responses.create({ model: "gpt-4o-mini", input: prompt });
+  return new Response(r.output_text, { status: 200 });
+}
+```
+
+Works identically in Express/Fastify handlers.
+
+⸻
+
+13) Real‑world use cases (battle‑tested patterns)
+1. Support copilot with File Search
+Upload product FAQs, policy PDFs, and release notes; answer with citations and tool calls for account data. Start with Responses + file_search.  
+2. Docs Q&A with Vision
+Let users paste screenshots; run Vision to explain UIs, errors, or configs; optionally stream suggested fixes.  
+3. Agent with tool calling
+Wrap your billing, CRM, and search as tools; the model decides when to call them, you execute and pass results back.  
+4. Live voice concierge
+Realtime API for hands‑free voice flows; add function tools for bookings and payments.  
+5. Design/image workflow
+Use gpt-image-1 to draft logos, iterate with edits, and pipe results into a brand kit generator.  
+
+⸻
+
+14) Production hardening (must‑dos)
+- Model selection & snapshots: pick gpt-4o for quality or gpt-4o-mini for speed/cost. Track snapshots when you need stable behavior.  
+- Streaming UX: always stream long generations; show “thinking” states.  
+- Retries & timeouts: exponential backoff for 429/5xx; set request timeouts.
+- Safety & validation: enforce Structured Outputs for machine‑consumed JSON; guard rails in your own code.  
+- Observability: log prompts, tool calls, token counts; consider redaction for PII.
+- File governance: upload only what you need; use File Search scopes.  
+- Edge vs Node: the official SDK targets server environments; for browser usage prefer Realtime WebRTC or server‑proxied calls.  
+
+⸻
+
+15) Assistant flow (if you choose Assistants v2)
+
+Shape of the lifecycle:
+1. Create an Assistant (instructions + model + tools)
+2. Create a Thread when a user starts
+3. Add Messages
+4. Run the Assistant → poll until complete → read output
+5. Repeat (the thread stores context)
+Docs & changes in v2 (tools/files) here.  
+
+⸻
+
+16) Working with PDFs & files (vision)
+
+Vision‑capable models can accept PDFs (as file IDs or base64) and images (png/jpg/gif/webp). Use file upload endpoints and pass purpose as required.  
+
+⸻
+
+17) Minimal “starter repo” checklist
+- openai installed; OPENAI_API_KEY in .env  
+- src/lib/openai.ts (single client)
+- A /api/ai endpoint using Responses API
+- Streaming wired for chat UIs
+- Optional: tool calling module, file upload route, image gen route
+- If voice: Realtime token endpoint + WebRTC client hook  
+
+⸻
+
+18) FAQ
+
+Q: Chat Completions vs Responses?
+A: Build new features on Responses; it unifies tools, multimodal, and multi‑turn interactions. See migration notes.  
+
+Q: Which model should I default to?
+A: Start with gpt‑4o‑mini for speed/cost; switch to gpt‑4o when quality matters most. Validate with your evals.  
+
+Q: Can I use the SDK in the browser?
+A: Prefer server calls, or the Realtime API for voice. If you must, carefully proxy and never expose secrets.  
+
+⸻
+
+19) Copy‑paste blocks (for your blog)
+
+npm, env, and smoke test
+
+```bash
+npm i openai
+echo 'OPENAI_API_KEY=sk-...'> .env
+node -e "import('openai').then(async m=>{const o=new m.default({apiKey:process.env.OPENAI_API_KEY});const r=await o.responses.create({model:'gpt-4o-mini',input:'Say hello'});console.log(r.output_text);})"
+```
+
+Install & hello world via SDK and Responses API.  
+
+Next.js streaming endpoint
+
+```ts
+// app/api/stream/route.ts
+import OpenAI from "openai";
+export const runtime = "nodejs";
+const o = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export async function GET() {
+  const stream = await o.responses.stream({
+    model: "gpt-4o",
+    input: "Stream a 5-bullet iOS release note template."
+  });
+  const encoder = new TextEncoder();
+  const readable = new ReadableStream({
+    async start(controller) {
+      for await (const ev of stream) {
+        if (ev.type === "response.output_text.delta") {
+          controller.enqueue(encoder.encode(ev.delta));
+        }
+      }
+      controller.close();
+    }
+  });
+  return new Response(readable, { headers: { "Content-Type": "text/plain" }});
+}
+```
+
+Streaming example using the SDK’s Responses stream helpers.  
+
+Realtime WebRTC server token (sketch)
+
+```ts
+// app/api/realtime-token/route.ts
+import OpenAI from "openai";
+const o = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export async function GET() {
+  // Exchange your server API key for a short-lived ephemeral client token
+  const token = await o.realtime.sessions.create({
+    model: "gpt-4o-mini-realtime-preview",
+    // scope, voice, modalities, etc.
+  });
+  return Response.json({ ephemeral: token.client_secret?.value });
+}
+```
+
+Then the browser connects via WebRTC as shown earlier. See the Realtime docs for event types and audio tracks.  
+
+⸻
+
+20) Further reading (official)
+- Quickstart and Overview for first‑run + keys/models.  
+- Responses API reference (all parameters & events).  
+- Function/Tool Calling guide.  
+- Realtime (WebRTC/WebSocket) guide.  
+- Assistants v2 overview, quickstart, and what’s new.  
+- Images & Vision guide.  
+- Structured Outputs guide.  
+- File Search tool.  
+
+⸻
+
+If you want, I can wrap this into a Mintlify page with your nav front‑matter and add a matching “Claude Code” or “LangChain.js vs SDK” companion post.
