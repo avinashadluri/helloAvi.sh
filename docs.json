@@ -55,6 +55,12 @@
               "dev/architecture-patterns",
               "dev/testing-strategies"
             ]
+          },
+          {
+            "group": "Observability",
+            "pages": [
+              "dev/observability"
+            ]
           }
         ]
       },
@@ -106,52 +112,6 @@
             "pages": [
               "ai/guides/claude-code",
               "ai/guides/openai-sdk"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Frontend",
-        "groups": [
-          {
-            "group": "Frontend Frameworks",
-            "pages": [
-              "frontend/react",
-              "frontend/nextjs",
-              "frontend/vue",
-              "frontend/angular"
-            ]
-          },
-          {
-            "group": "Frontend Technologies",
-            "pages": [
-              "frontend/javascript",
-              "frontend/typescript",
-              "frontend/css-frameworks",
-              "frontend/ui-ux"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Backend",
-        "groups": [
-          {
-            "group": "Backend Technologies",
-            "pages": [
-              "backend/nodejs",
-              "backend/python",
-              "backend/databases",
-              "backend/apis"
-            ]
-          },
-          {
-            "group": "Infrastructure",
-            "pages": [
-              "backend/cloud-platforms",
-              "backend/microservices",
-              "backend/containerization",
-              "backend/monitoring"
             ]
           }
         ]

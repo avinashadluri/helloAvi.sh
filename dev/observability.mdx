@@ -1,0 +1,273 @@
+---
+title: "Observability and SLAs"
+description: "A full-stack guide to SLAs, SLOs, and SLIs for product and engineering"
+icon: "activity"
+---
+
+# A Full-Stack Guide to SLAs (SLA → SLO → SLI) for Product & Engineering
+
+---
+
+## Why this guide?
+
+Most SLA docs stop at definitions. This one goes further:
+- Map SLA → SLO → SLI across frontend, backend, product.
+- Gives code you can copy-paste for monitoring and guardrails.
+- Adds incident runbooks, checklists, and diagrams you can reuse.
+
+---
+
+## 1) Vocabulary (2-minute refresher)
+
+- **SLA** = External promise (often contractual) to customers.
+  - Example: "99.9% monthly uptime. Credits if breached."
+- **SLO** = Internal target that supports the SLA.
+  - Example: "Aim for 99.95% uptime so we comfortably meet 99.9%."
+- **SLI** = Measured indicator used to judge the SLO/SLA.
+  - Example: "Last month's measured uptime: 99.97%."
+
+Other key terms:
+- Uptime (% of time service is usable)
+- Latency (response delay)
+- Error rate
+- MTTR (mean time to repair)
+- MTBF (mean time between failures)
+- Error budget (allowable failure without breaching SLO)
+
+---
+
+## 2) SLA by persona: who owns what?
+
+**Frontend (UX & delivery)**
+- SLOs to watch: LCP p75 ≤ 2.5s, JS error rate ≤ 0.1%, API p95 latency ≤ 300ms.
+- Responsibilities: Skeletons, offline/cache strategies, retries, feature flags, RUM.
+
+**Backend (reliability & scale)**
+- SLOs to watch: API p95 ≤ 300ms, 5xx ≤ 0.1%, uptime ≥ 99.95%.
+- Responsibilities: Capacity planning, retries with backoff, DB replicas, circuit breakers.
+
+**Product & Legal (promise & customer impact)**
+- Responsibilities: Tiered SLAs, credits/penalties, status communications, support response times.
+
+**Observability & On-call (proof & action)**
+- Responsibilities: Define SLIs, dashboards, synthetic checks, runbooks, postmortems.
+
+---
+
+## 3) Architecture at a glance
+
+- Client (browser/app): Service worker for caching, UI, error boundaries, Web Vitals API.
+- Edge (CDN, auth provider, payments).
+- Backend: BFF/GraphQL, services like Search, Checkout.
+- Observability: RUM SDK, APM, alerting, status page.
+
+How it ties to SLA:
+- SLIs = RUM (LCP, TTFB, error rates), APM (latency, 5xx).
+- SLOs = targets for speed and availability.
+- SLA = external commitment backed by SLO cushions.
+
+---
+
+## 4) Defining SLOs
+
+### User-facing performance
+- LCP p75 ≤ 2.5s
+- TTI p75 ≤ 3.5s
+- JS error rate ≤ 0.1%
+
+### API reliability
+- Availability ≥ 99.95%/month
+- p95 latency ≤ 300ms
+- 5xx ≤ 0.1%
+
+### Business journeys
+- Checkout success ≥ 99.8%
+- Auth success ≥ 99.9%
+
+---
+
+## 5) Frontend: build to meet the SLOs
+
+### Collect SLIs (Web Vitals)
+```typescript
+import { onLCP, onCLS, onINP } from 'web-vitals';
+
+function send(metric) {
+  navigator.sendBeacon('/rum', JSON.stringify(metric));
+}
+
+onLCP(send);
+onCLS(send);
+onINP(send);
+```
+
+### Measure API latency against SLA
+```typescript
+export async function timedFetch(url) {
+  const start = performance.now();
+  const res = await fetch(url);
+  const dur = performance.now() - start;
+
+  if (dur > 300) {
+    console.warn(`SLA breach: ${dur}ms > 300ms`);
+  }
+  return res;
+}
+```
+
+### Resilience (timeouts, retries)
+```typescript
+export async function httpJSON(url, retries = 1) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 2500);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal });
+    if (!res.ok) throw new Error(res.statusText);
+    return await res.json();
+  } catch (e) {
+    if (retries > 0) return httpJSON(url, retries - 1);
+    throw e;
+  } finally {
+    clearTimeout(t);
+  }
+}
+```
+
+UX contracts: skeletons for fast targets, degraded mode with cached data, retry buttons.
+
+---
+
+## 6) Backend: protect latency and availability
+
+### Express middleware to record latency
+```typescript
+export function recordLatency(req, res, next) {
+  const start = process.hrtime.bigint();
+  res.on('finish', () => {
+    const ms = Number(process.hrtime.bigint() - start) / 1e6;
+    console.log({ route: req.path, ms });
+  });
+  next();
+}
+```
+
+### Circuit breaker with backoff
+```typescript
+import axios from 'axios';
+let failures = 0, openedAt = 0;
+
+export async function callUpstream(path) {
+  if (failures >= 5 && Date.now() - openedAt < 15000) {
+    throw new Error('circuit_open');
+  }
+  try {
+    const res = await axios.get(path, { timeout: 2000 });
+    failures = 0;
+    return res.data;
+  } catch (e) {
+    failures++;
+    if (failures === 5) openedAt = Date.now();
+    await new Promise(r => setTimeout(r, Math.min(2 ** failures * 50, 1000)));
+    throw e;
+  }
+}
+```
+
+---
+
+## 7) Product: convert metrics into customer value
+
+### Tiered SLAs
+- Free: best effort.
+- Pro: 99.9% uptime, p95 ≤ 400ms, credits after 30 mins downtime.
+- Enterprise: 99.95% uptime, p95 ≤ 300ms, 24x7 support, RTO ≤ 1h.
+
+### Clear wording
+"We guarantee 99.9% monthly uptime, excluding scheduled maintenance. If uptime drops below 99.9%, we credit 10% of fees for each 0.1% missed, capped at 50%."
+
+---
+
+## 8) CI/CD guardrails
+
+### Lighthouse performance budgets
+```json
+{
+  "timings": [
+    { "metric": "largest-contentful-paint", "budget": 2500 },
+    { "metric": "total-blocking-time", "budget": 200 }
+  ]
+}
+```
+
+### Contract test for p95 latency
+```typescript
+test('search p95 ≤ 300ms', async () => {
+  const { p95 } = await measureP95(() => fetch('/search'), 50);
+  expect(p95).toBeLessThanOrEqual(300);
+});
+```
+
+---
+
+## 9) Incident runbook (frontend-first)
+1. Detect breach → RUM/APM/uptime check.
+2. Scope → frontend, backend, or 3rd party?
+3. Mitigate → cache-first, retries, degraded mode.
+4. Communicate → in-app banners, status page.
+5. Resolve → restore service, verify recovery.
+6. Postmortem → document cause, action items.
+
+User comms example: "We're experiencing slower-than-usual load times. Your data is safe. [Status Page]"
+
+---
+
+## 10) Worked scenarios
+- Search API SLA ≤ 300ms → skeletons, prefetch queries, edge cache.
+- Payment API SLA ≤ 2s → UX modal with retry, dual-provider fallback.
+- CDN hiccup → service worker cache, secondary CDN.
+- Auth outage → session grace period, read-only mode.
+- LCP regressions → responsive images, priority hints, perf budgets in CI.
+
+---
+
+## 11) Error budgets & release policy
+- Error budget = 1 − SLO (e.g., 99.95% uptime ⇒ 0.05% downtime budget).
+- If budget burns fast: freeze feature rollouts, prioritize reliability.
+
+---
+
+## 12) Checklists
+
+### Design/PRD
+- Define journeys + SLIs.
+- Write SLOs with percentile + scope.
+- Note 3rd-party SLAs and fallbacks.
+
+### Build
+- Web Vitals + network SLIs wired to RUM.
+- Timeouts, retries, degraded mode.
+- Feature flags for rollback.
+
+### Release
+- Perf budgets in CI.
+- Synthetic checks in staging.
+- On-call aware of changes.
+
+### Operate
+- Dashboards per journey.
+- Alerts tied to incident rooms.
+- Postmortems with owners.
+
+---
+
+## Conclusion
+
+SLAs aren’t just contracts. They are design constraints, UX guardrails, and product promises.
+
+Frontend, backend, product, and on-call teams must collaborate to:
+- Define measurable SLIs.
+- Set achievable SLOs.
+- Promise credible SLAs.
+
+When done right, SLAs move from being a legal shield to a trust engine that builds reliability and customer loyalty.
+
