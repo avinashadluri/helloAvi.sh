@@ -1,0 +1,65 @@
+---
+title: "Service Level Indicators (SLIs)"
+description: "Measuring user experience with meaningful metrics"
+icon: "activity"
+---
+
+# Service Level Indicators
+
+SLIs quantify how well a service is performing from the user’s perspective. Good SLIs are:
+
+- **Representative** of real user journeys
+- **Quantifiable** and automatically measurable
+- **Controlled** by the team that owns the service
+
+---
+
+## Choosing SLIs
+
+1. Map critical user actions.
+2. Identify the signals that describe success or failure.
+3. Instrument the application to collect those signals.
+
+---
+
+## Examples
+
+**Frontend**
+
+- LCP p75
+- JS error rate
+- API call p95 latency
+
+**Backend**
+
+- Request success rate
+- Availability
+- Queue length
+
+**Business**
+
+- Checkout success ratio
+- Sign-up conversion
+
+---
+
+## Implementing SLIs
+
+```typescript
+import { onLCP } from 'web-vitals';
+
+onLCP(metric => {
+  navigator.sendBeacon('/rum', JSON.stringify({ name: metric.name, value: metric.value }));
+});
+```
+
+Use a single export path for SLIs so dashboards and alerts stay consistent.
+
+---
+
+## Reviewing SLIs
+
+- Track trends over time
+- Correlate with incidents
+- Retire SLIs that no longer map to user value
+

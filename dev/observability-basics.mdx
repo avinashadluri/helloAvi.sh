@@ -1,0 +1,44 @@
+---
+title: "Observability Basics"
+description: "Core principles and pillars of observing modern systems"
+icon: "eye"
+---
+
+# Observability Basics
+
+Observability is the ability to understand a system's internal state from its external outputs.
+This guide covers the foundations you need before diving into SLIs, SLOs, and SLAs.
+
+---
+
+## The Three Pillars
+
+- **Logs** – immutable event records. Useful for debugging and auditing.
+- **Metrics** – numeric measurements over time. Ideal for dashboards and alerting.
+- **Traces** – end-to-end request paths. Useful for understanding latency and dependencies.
+
+---
+
+## Telemetry Pipeline
+
+1. Instrument code with open standards such as [OpenTelemetry](https://opentelemetry.io).
+2. Export data to a collector or agent.
+3. Store data in a backend (Prometheus, Jaeger, etc.).
+4. Visualise and alert with dashboards.
+
+---
+
+## Key Practices
+
+- **Contextual logging** – include correlation IDs and user info.
+- **High-cardinality metrics** – carefully label; avoid unbounded labels.
+- **Sampling** – control volume of traces and logs to manage cost.
+- **Retention & compliance** – define how long telemetry is stored.
+
+---
+
+## Next steps
+
+Once you understand the basics, dive into the specific guides on
+SLIs, SLOs, and SLAs to tie observability to reliability commitments.
+

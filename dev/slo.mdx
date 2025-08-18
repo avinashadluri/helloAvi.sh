@@ -1,0 +1,61 @@
+---
+title: "Service Level Objectives (SLOs)"
+description: "Setting targets and error budgets that keep systems reliable"
+icon: "target"
+---
+
+# Service Level Objectives
+
+SLOs define the reliability targets for your service. They bridge the gap between raw SLIs and external SLAs.
+
+---
+
+## Anatomy of an SLO
+
+- **Metric** – which SLI is being targeted.
+- **Threshold** – the numeric goal (e.g., 99.95% availability).
+- **Time window** – the period over which it is measured.
+
+---
+
+## Error Budgets
+
+```
+error_budget = 1 - SLO
+```
+
+The error budget quantifies how much unreliability is acceptable. When the budget is exhausted:
+
+- Pause risky releases
+- Focus on reliability work
+- Communicate status to stakeholders
+
+---
+
+## Defining SLOs Step by Step
+
+1. Start from user journeys.
+2. Pick the most critical SLIs for each journey.
+3. Choose an achievable target with historical data.
+4. Set the measurement window (rolling 30 days, calendar month, etc.).
+5. Document owners and review cadence.
+
+---
+
+## Example SLOs
+
+| Service            | SLI             | SLO            |
+|-------------------|-----------------|----------------|
+| API Gateway        | Availability    | 99.95% monthly |
+| Search             | p95 latency     | ≤300ms         |
+| Checkout           | Success rate    | ≥99.8%         |
+| Frontend LCP       | LCP p75         | ≤2.5s          |
+
+---
+
+## Operating with SLOs
+
+- Plot burn rate dashboards.
+- Alert on fast-burn conditions (e.g., 2% of budget consumed in 1 hour).
+- Review SLOs quarterly to ensure they still reflect user expectations.
+

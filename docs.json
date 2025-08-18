@@ -59,7 +59,11 @@
           {
             "group": "Observability",
             "pages": [
-              "dev/observability"
+              "dev/observability-basics",
+              "dev/observability",
+              "dev/slo",
+              "dev/sli",
+              "dev/observability-tools"
             ]
           }
         ]

@@ -1,0 +1,51 @@
+---
+title: "Observability Tools"
+description: "Platforms we rely on for metrics, traces, and logs"
+icon: "tool"
+---
+
+# Observability Tools
+
+A solid observability stack is a combination of collection agents, storage backends, and visualisation tools.
+
+---
+
+## Metrics
+
+- **Prometheus** – scraping and storing time series data.
+- **Grafana** – dashboards and alerting.
+- **CloudWatch / Stackdriver** – managed metrics in the cloud.
+
+## Logs
+
+- **Loki / Elasticsearch** – log aggregation with structured search.
+- **Fluent Bit** – lightweight log forwarding agent.
+- **Sentry** – application error tracking.
+
+## Traces
+
+- **Jaeger / Tempo** – distributed tracing backends.
+- **OpenTelemetry** – unified APIs and SDKs for traces, metrics, and logs.
+
+## Real User Monitoring (RUM)
+
+- **Datadog RUM** – browser and mobile instrumentation.
+- **New Relic Browser** – frontend performance insights.
+
+---
+
+## Choosing Tools
+
+When selecting tools consider:
+
+- **Open standards** to avoid lock‑in.
+- **Cost of storage and retention.**
+- **Ease of integration** with your stack.
+- **Community and ecosystem support.**
+
+---
+
+## Putting it together
+
+Use OpenTelemetry to emit telemetry once, send it to an agent, then fan out to the tools above depending on your needs.
+
