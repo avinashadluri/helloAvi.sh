@@ -65,23 +65,28 @@
         ]
       },
       {
-        "tab": "Tech",
+        "tab": "Productivity",
         "groups": [
           {
-            "group": "Technology Insights",
+            "group": "Tools & Apps",
             "pages": [
-              "tech/emerging-technologies",
-              "tech/cloud-computing",
-              "tech/data-engineering",
-              "tech/security"
+              "productivity/useful-web-apps",
+              "productivity/automations"
             ]
           },
           {
-            "group": "Industry Trends",
+            "group": "Workflows & Prompts",
             "pages": [
-              "tech/tech-trends",
-              "tech/startup-ecosystem",
-              "tech/innovation"
+              "productivity/workflows",
+              "productivity/prompts"
+            ]
+          },
+          {
+            "group": "Life Management",
+            "pages": [
+              "productivity/personal-finance",
+              "productivity/health-organization",
+              "productivity/life-hacks"
             ]
           }
         ]
