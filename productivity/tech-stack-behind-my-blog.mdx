@@ -1,0 +1,155 @@
+---
+title: "The Tech Stack Behind My Blog: Mintlify + Vercel + AI Codex"
+description: "My AI-assisted workflow using Mintlify, Vercel, GitHub, and ChatGPT Codex"
+icon: "rocket"
+---
+
+# The Tech Stack Behind My Blog: Mintlify + Vercel + AI Codex
+
+Running a blog in 2025 is less about fiddling with infrastructure and more about creating a smooth developer workflow. My setup combines Mintlify (for content + docs engine), Vercel (for previews & edge hosting), GitHub (for version control), and even ChatGPT Codex (to draft posts directly into my repo).
+
+---
+
+## ⚡ Tech Stack Overview
+
+- Content & site engine → Mintlify
+- Versioning & PRs → GitHub
+- Custom domain & hosting → Mintlify (DNS via Vercel)
+- Previews & micro-apps → Vercel
+- AI-powered content pipeline → ChatGPT Codex → Git → PR → Mintlify deploy
+
+---
+
+## 🚀 Why Mintlify?
+
+Most people think of Mintlify as developer documentation tooling. That’s true — but the beauty of Mintlify is that it’s flexible enough to be used as a blog framework.
+
+I was impressed when I looked at how companies like Vercel, Cursor, and Anthropic organize their docs. Clean navigation, consistent categorization, and polished typography made me realize:
+
+Why not structure my blog like a docs site?
+
+Instead of a cluttered CMS or a noisy blog platform, I wanted a place to organize my thoughts into categories, just like APIs or product docs are organized into sections. It makes navigation easier for me as the writer — and for readers who want to jump between posts.
+
+Why I prefer Mintlify for a blog (not just docs):
+
+:::card
+- Structured categorization → Perfect for organizing long-form posts like “guides,” “ideas,” or “essays.”
+- Docs-like navigation → Sidebar, groups, search — everything people expect from technical content.
+- Simple writing workflow → Markdown/MDX + GitHub, no heavy CMS.
+- Polished defaults → Typography, dark mode, mobile responsiveness, cards — all out of the box.
+- Zero distractions → No comments section, no social clutter. If someone wants to reach me, they can email or DM.
+- AI search & assistant → Helps readers find content fast.
+:::
+
+### Why I don’t enable comments
+
+I deliberately keep my blog comment-free. It’s not that I don’t want to hear from readers — I’d just rather keep it personal and direct. If someone wants to have a conversation, they can send me an email or reach out on social platforms. This keeps the blog focused on content, not debates.
+
+---
+
+## 💰 Pricing Snapshot
+
+:::card
+Free / Hobby → For individuals & small projects
+Pro (~$250/mo) → 5 seats, AI assistant, preview deploys, analytics, styling
+- Extra seats → $15/mo each
+- AI overages → $0.15/response
+Enterprise (custom) → SSO, SLAs, migrations, dedicated support
+:::
+
+⚠️ Multiple sites = multiple subscriptions. If you want blog.mydomain.com and docs.mydomain.com, each is billed separately.
+
+---
+
+## 🔧 Deployment Workflow
+
+1. **Repo + Config**
+
+   Content lives in `/posts` with a `docs.json`:
+
+   ```json
+   {
+     "name": "My Blog",
+     "theme": "mintlify",
+     "colors": { "primary": "#1ec794" },
+     "navigation": [
+       { "group": "Blog", "pages": ["index", "posts/my-first-post"] },
+       { "group": "Ideas", "pages": ["posts/ideas/structured-writing"] },
+       { "group": "About", "pages": ["about"] }
+     ]
+   }
+   ```
+
+2. **Local Preview**
+
+   ```bash
+   npm i -g mintlify
+   mintlify dev
+   ```
+
+3. **GitHub Sync**
+
+   Every push = auto build on Mintlify.
+
+4. **Domain Setup**
+
+   Point subdomain → Mintlify:
+
+   - Type: `CNAME`
+   - Name: `blog`
+   - Target: `cname.vercel-dns.com`
+
+5. **AI Content Pipeline (ChatGPT Codex)**
+
+   1. Draft post in ChatGPT Codex.
+   2. Codex writes Markdown directly into my local `/posts/`.
+   3. Push branch → open a PR on GitHub.
+   4. Merge → Mintlify auto-deploys the new article.
+
+This gives me an AI-assisted publishing workflow: write → commit → merge → live.
+
+---
+
+## 🌍 Where Vercel Fits
+
+:::card
+Vercel = my “everything else” layer
+- Preview deployments for landing pages & microsites.
+- Edge Functions for dynamic utilities.
+- Global edge CDN for speed.
+:::
+
+---
+
+## 🔄 Alternatives to Mintlify
+
+| Tool | Best For | Why Use It | Pricing |
+| --- | --- | --- | --- |
+| ReadMe | API hubs | Live playgrounds, dev onboarding | from $99/mo |
+| GitBook | Team docs | Notion-like editor, AI answers, Git sync | from $8/user/mo |
+| Docusaurus | OSS docs | React-based, versioned docs, self-host | Free |
+| MkDocs (Material) | OSS/python | Lightweight, extensible | Free |
+| Archbee | SaaS + wiki | Mix internal/external docs | from $49/mo |
+
+---
+
+## ✅ Quick Setup Checklist
+
+- Create repo + `docs.json`.
+- Run `mintlify dev` locally.
+- Connect GitHub → Mintlify.
+- Add CNAME → `cname.vercel-dns.com`.
+- Enable AI Assistant + analytics.
+- Automate content pushes with ChatGPT Codex → GitHub PRs.
+- Keep a Vercel project for microsites/previews.
+
+---
+
+## 🏁 Final Thoughts
+
+For me, Mintlify is not “just docs software” — it’s a new way to blog. Borrowing the categorization and navigation patterns of great docs sites (like Vercel, Cursor, Anthropic), I can structure my writing into sections, guides, and ideas instead of a chronological mess.
+
+No comments, no clutter — just clean writing, discoverable content, and a simple contact path if someone wants to reach me.
+
+Mintlify + Vercel + GitHub + ChatGPT Codex = a modern, lean, AI-assisted publishing stack.
+
