@@ -179,6 +179,17 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Mind",
+        "groups": [
+          {
+            "group": "Mindset",
+            "pages": [
+              "mind/how-to-convert-rejection-into-feedback"
+            ]
+          }
+        ]
       }
     ]
   },
