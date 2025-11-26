@@ -1,20 +1,48 @@
 ---
-title: "DevOps & Infrastructure"
-description: "Modern DevOps practices, CI/CD, and cloud infrastructure"
-icon: "server"
+title: "Trend Radar · Platform Stewardship"
+description: "Signals I track across DevOps, DX, and platform engineering for the NeuroStack deck."
 ---
 
-# DevOps & Infrastructure
+# Trend Radar · Platform Stewardship
 
-Coming soon! This section will explore:
+This log keeps the DevOps/platform signals I’m acting on. Use it as a briefing before planning quarters or tooling investments.
 
-- CI/CD pipeline design
-- Docker and Kubernetes
-- Cloud infrastructure (AWS, GCP, Azure)
-- Infrastructure as Code
-- Monitoring and observability
-- Security best practices
+## 1. Signals on My Radar
 
-<Note>
-  This page is under construction. Check back soon for detailed DevOps content!
-</Note>{" "}
+| Signal | Why it matters | Current experiment |
+| --- | --- | --- |
+| React Server Components | Streaming UX + reduced hydration costs | Using in MetaLabs dashboards with fallback islands. |
+| Edge Runtimes (Workers, Deno) | Close to user, low latency, built-in isolation | Running agent webhooks on Cloudflare Workers + durable objects. |
+| AI-assisted DX | Copilots accelerate repeatable tasks but need guardrails | Custom instructions for Cursor + GitHub Copilot to enforce design tokens + test scaffolds. |
+| Rsbuild / Turbopack hybrids | Dramatic build-time improvements | Paired with Vite for best-of-both worlds pipeline. |
+| Cost Observability | FinOps is part of DevOps | Pump AWS Cost & Usage data into Metabase dashboards with budgets per product. |
+
+## 2. Platform Stewardship Principles
+
+1. **Every workflow documented** – CLI recordings + Loom to onboard next engineer.
+2. **Golden paths** – Template repos for services, micro frontends, n8n automations.
+3. **Guardrails over gates** – Linting, typegen, contract tests run automatically; humans focus on narrative reviews.
+4. **Measure developer joy** – Quarterly surveys, DORA metrics, friction logs.
+
+## 3. Golden Path Catalog
+
+- **`create-neurostack-app`** – spins up Next.js + tRPC + Turso with infra-as-code.
+- **`svc-template`** – Express/Nest service with OpenTelemetry + SLO starter.
+- **`automation-starter`** – n8n workflow plus Git-based deployment (FlowOS use cases).
+
+## 4. Quarterly Checkpoint Template
+
+```md
+### Platform OKR Review
+- What slowed teams?
+- Which guardrails saved time?
+- Runway of tech debt (days)?
+- Cost-per-product vs SLO budgets?
+- Next-quarter bets?
+```
+
+## 5. How to Engage
+
+- Drop questions in the GitHub Discussions board (`#platform-stewardship`).
+- Request a pairing session if you’re planning a new pod; we’ll co-design the guardrails.
+- Share radar signals back—this page is living documentation.

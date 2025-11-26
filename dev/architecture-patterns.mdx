@@ -1,20 +1,46 @@
 ---
-title: "Architecture Patterns"
-description: "Software architecture patterns and system design principles"
-icon: "blueprint"
+title: "Frontend Architecture Blueprints"
+description: "Feature-sliced design, design-system-first delivery, and platform-aware React patterns."
 ---
 
-# Architecture Patterns
+# Frontend Architecture Blueprints
 
-Coming soon! This section will explore:
+The blueprints below power AviEngine builds. Mix and match depending on team size and target platform.
 
-- Microservices vs Monolith
-- Event-driven architecture
-- CQRS and Event Sourcing
-- Domain-driven design
-- Serverless architectures
-- Scalability patterns
+## 1. Feature-Sliced + Domain-Driven
 
-<Note>
-  This page is under construction. Check back soon for architecture insights!
-</Note>{" "}
+```text
+src/
+ ├─ app/ (routing, layouts)
+ ├─ entities/ (domain models)
+ ├─ features/ (user-facing capabilities)
+ ├─ widgets/ (composite UI blocks)
+ └─ shared/ (design system, utilities)
+```
+
+- Use barrel files per slice; forbid cross-imports with ESLint `boundaries` plugin.
+- Document each slice with MDX (purpose, owners, telemetry hooks).
+
+## 2. Design-System-First Delivery
+- Tokens live in `packages/tokens` with Style Dictionary + Figma sync.
+- Component packages expose `@avi/ui` with tree-shakeable exports.
+- Every feature PR lists the component IDs touched; helps with changelog + release train.
+
+## 3. React Excellence Checklist
+- Prefer Server Components for data-heavy sections; wrap with client boundaries for interactions.
+- Use Suspense + `use` for streaming; provide fallback skeletons instrumented with Web Vitals.
+- Co-locate mutations via server actions; validate with Zod + return typed results.
+- Snapshot tests minimized; rely on Storybook interaction tests + visual regression.
+
+## 4. REST + GraphQL Rigor
+- Versioned REST via path (v1/v2) + header for early adopters.
+- Pagination defaults: cursor-based; include `hasNext`, `timestamp`.
+- Error contracts: `code`, `message`, `docsLink`, `traceId`.
+- GraphQL schema linted with `graphql-schema-linter`, breaking change detector in CI.
+
+## 5. Platform Stewardship Article Series
+- **Platform guardrails**: CLI scaffolds, lint presets, doc templates.
+- **DX Observability**: Collect `pnpm install` duration, test flake rates, PR cycle times.
+- **Design token governance**: treat as code with preview links + sign-offs from design + eng.
+
+Use this blueprint doc as a reference when planning migrations or mentoring new engineers on the AviEngine stack.

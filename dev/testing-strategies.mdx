@@ -1,20 +1,43 @@
 ---
-title: "Testing Strategies"
-description: "Comprehensive testing approaches for modern applications"
-icon: "flask"
+title: "Testflight Lab"
+description: "End-to-end testing strategy for Jest, Playwright, Cypress, Storybook interactions, and AI feature red teaming."
 ---
 
-# Testing Strategies
+# Testflight Lab · Quality Strategy
 
-Coming soon! This section will cover:
+Testing is the guardrail that lets us ship fast across AviEngine, FlowOS, and Sentience Studio. This lab outlines the layers and tooling we use.
 
-- Unit testing best practices
-- Integration testing
-- End-to-end testing
-- Test-driven development
-- Testing automation
-- Performance testing
+## 1. Strategy Overview
+- **Shift left**: contract tests + component stories before API wiring.
+- **Synthetic monitoring**: Playwright cron jobs hit prod smoke paths hourly.
+- **Red teaming**: AI features get adversarial prompts + guardrail evals.
 
-<Note>
-  This page is under construction. Check back soon for testing strategies!
-</Note>{" "}
+## 2. Layered Stack
+
+| Layer | Tooling | Notes |
+| --- | --- | --- |
+| Unit | Vitest / Jest + Testing Library | Mocks kept in `__fixtures__`; snapshots minimized. |
+| Integration | Supertest + MSW | API + DB interactions with seed data per suite. |
+| UI/E2E | Playwright + Cypress | Playwright for core flows, Cypress for visual diff in design system. |
+| Stories | Storybook Interaction Tests | Each component story asserts accessibility + state logic. |
+| API Contracts | Pactflow + OpenAPI tests | PR fails if breaking change detected. |
+| AI Eval | LangSmith + custom scripts | Track toxicity, hallucination, guardrail coverage. |
+
+## 3. Recipe: Adding a FlowOS Feature
+1. Write MDX spec + stub Storybook story.
+2. Add Vitest unit tests for hooks + utilities.
+3. Add Playwright scenario hitting new workflow.
+4. Register synthetic monitor (Checkly) once live.
+5. Document runbooks + expected SLOs.
+
+## 4. Reporting + Dashboards
+- Coverage + flake rate inside Buildkite Insights.
+- Playwright video artifacts auto-uploaded to S3 + Slack thread.
+- AI eval scores tracked per agent (precision/recall on guardrail dataset).
+
+## 5. Incident Feedback Loop
+- Failures create GitHub issues via Actions.
+- Weekly "Testflight Retro" reviews flaky tests, identifies systemic issues.
+- Document lessons learned inside `/runbooks/testing/<date>.mdx`.
+
+Adopt these layers wholesale or remix them; the key is to keep quality visible and automated.

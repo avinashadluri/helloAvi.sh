@@ -1,13 +1,36 @@
 ---
-title: "Machine Learning"
-description: "ML algorithms, techniques, and applications"
-icon: "brain"
+title: "Sentience Studio · Machine Learning Foundations"
+description: "How I approach classical ML inside the Sentience Studio stack."
 ---
 
-# Machine Learning
+# Machine Learning Foundations
 
-Coming soon! This section will explore various aspects of machine learning.
+Even in an LLM world, classical ML powers plenty of Sentience Studio workflows. Here’s the playbook.
 
-<Note>
-This page is under construction. Check back soon for detailed content on machine learning!
-</Note>
+## 1. Problem Framing
+- Define **Decision Surface**: what action/outcome are we predicting?
+- Capture **Data Reality**: source, volume, freshness, labeling cost.
+- Identify **Success Metric**: accuracy, F1, RMSE, cost savings.
+
+## 2. Dataset Ops
+- **Ingest**: Airbyte → BigQuery, version via LakeFS.
+- **Label**: Snorkel + human-in-the-loop in Label Studio.
+- **Split**: Temporal splits for time series, stratified for classification.
+- **Data cards**: Document biases, schema, owners.
+
+## 3. Modeling Stack
+- Tabular: CatBoost, XGBoost with Optuna tuning.
+- Time-series: Prophet + Nixtla NeuralForecast.
+- Recommendation: implicit matrix factorization + rerank via embeddings.
+
+## 4. Deployment
+- Package models with BentoML, deploy to AWS Lambda / ECS.
+- Monitor with Evidently AI; send drifts to Slack.
+- Build guardrails: auto-disable if metrics degrade beyond threshold.
+
+## 5. Use Cases
+- FlowOS habit scoring.
+- AviWealth cashflow anomaly detection.
+- Thinki.sh challenge recommendations.
+
+Pair this doc with the Generative AI playbook for hybrid systems.

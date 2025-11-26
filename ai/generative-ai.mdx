@@ -1,13 +1,39 @@
 ---
-title: "Generative AI"
-description: "LLMs, diffusion models, and generative applications"
-icon: "sparkles"
+title: "Sentience Studio · Generative AI"
+description: "Agents, copilots, evaluation harnesses, and launch rituals."
 ---
 
-# Generative AI
+# Sentience Studio · Generative AI
 
-Coming soon! This section will explore various aspects of generative ai.
+This is the control room for my generative AI work.
 
-<Note>
-This page is under construction. Check back soon for detailed content on generative ai!
-</Note>
+## 1. Agent Diary Framework
+- **Brief**: Problem, audience, constraints, success metrics.
+- **Brain**: Model choice (GPT-4o, Claude 3.5, local Llama variants).
+- **Tools**: Functions for data, actions, notifications.
+- **Memory**: Supabase or Redis for short/long-term context.
+- **Evals**: Guardrail dataset run nightly.
+
+## 2. Copilot Design Principles
+1. Augment, don’t replace – copilots should edit/guide, not auto-send.
+2. Explain confidence + cite sources.
+3. Provide escape hatch back to human workflow.
+4. Instrument usage to learn what to improve.
+
+## 3. Launch Ritual
+- Dry-run with internal team, capture friction.
+- Red-team prompts (see `ai/ai-ethics.mdx`).
+- Add documentation + Loom demo.
+- Ship to small cohort (WhatsApp broadcast, newsletter) before wider rollout.
+
+## 4. Evaluation Harness
+- LangSmith + custom dataset derived from Thinki.sh frameworks.
+- Metrics: factuality, tone, toxicity, actionability.
+- Track cost per request; tie into cost observability dashboards.
+
+## 5. Roadmap
+- **Agent Ops Kit**: packaging evaluation + deployment scripts.
+- **Edge inference**: exploring Cloudflare Workers AI + Vercel AI SDK for low-latency features.
+- **LLM FinOps**: cost budgeting + token dashboards per product.
+
+This page updates often—subscribe to the Agent Diaries feed for real-time notes.

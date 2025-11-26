@@ -1,17 +1,33 @@
 ---
-title: "Automations"
-description: "Save time by letting scripts do the work"
-icon: "bot"
+title: "Workflow Synths"
+description: "n8n, OpenAI agents, and three bonus flows that power FlowOS."
 ---
 
-# Automations
+# Workflow Synths · Automations Lab
 
-Tips and tools for automating repetitive tasks and simplifying your life.
+Automations should feel like a band, not a mess of scripts. Here’s the FlowOS set list.
 
-- Browser extensions
-- Workflow automation services
-- Scripting ideas
+## 1. n8n Masterclass
+- **Stack**: Self-hosted on Fly.io + Postgres backend.
+- **Blueprints**:
+  - `Daily Ops`: pulls calendar, weather, and sends ritual digest.
+  - `Family Logistics`: syncs school updates → shared Notion board.
+  - `Agent Guardrails`: evaluates AI agent outputs before publishing.
+- **Guides**: Loom walkthrough + exported `.json` flows included in repo.
 
-<Note>
-  Automation examples coming soon.
-</Note>
+## 2. OpenAI Agent Pipelines
+- **Architecture**: Vercel edge function → OpenAI/Anthropic → Supabase vector store.
+- **Use cases**: Thinki.sh prompt coach, MetaLabs changelog writer, PTE practice grader.
+- **Eval Harness**: LangSmith, Truelens, and custom dataset to track hallucinations.
+
+## 3. Bonus Flows
+- **Zapier + Replit Agents**: Quick experiments hooking Airtable → Slack → agent follow-ups.
+- **Make.com for Creators**: Auto-generate Instagram reels metadata + publish to Notion.
+- **Airplane.dev Runbooks**: Ops automations for deployments, cost sweeps, access requests.
+
+## 4. Governance
+- Automations repo (`/automation`) with versioned flows + tests.
+- Secrets managed via Doppler.
+- Every workflow has an owner, SLO, and "pull-the-plug" switch.
+
+Fork any of these flows, or request the private repo for deeper dives.

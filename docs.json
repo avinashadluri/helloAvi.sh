@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Avi's Blog",
+  "name": "Avinash.sh",
   "colors": {
     "primary": "#4f46e5",
     "light": "#07C983",
@@ -17,22 +17,20 @@
         "tab": "Home",
         "groups": [
           {
-            "group": "Overview",
-            "pages": [
-              "introduction"
-            ]
+            "group": "Welcome",
+            "pages": ["introduction"]
           },
           {
             "group": "About Me",
-            "pages": [
-              "about"
-            ]
+            "pages": ["about"]
           },
           {
-            "group": "Connect",
-            "pages": [
-              "contact"
-            ]
+            "group": "Social",
+            "pages": ["contact"]
+          },
+          {
+            "group": "Products",
+            "pages": ["products"]
           }
         ]
       },
@@ -81,10 +79,7 @@
           },
           {
             "group": "Workflows & Prompts",
-            "pages": [
-              "productivity/workflows",
-              "productivity/prompts"
-            ]
+            "pages": ["productivity/workflows", "productivity/prompts"]
           },
           {
             "group": "Life Management",
@@ -120,10 +115,7 @@
           },
           {
             "group": "Guides",
-            "pages": [
-              "ai/guides/claude-code",
-              "ai/guides/openai-sdk"
-            ]
+            "pages": ["ai/guides/claude-code", "ai/guides/openai-sdk"]
           }
         ]
       },
@@ -182,13 +174,32 @@
         ]
       },
       {
-        "tab": "Mind",
+        "tab": "Thinki.sh",
         "groups": [
           {
-            "group": "Mindset",
+            "group": "Playbooks",
+            "pages": ["thinkish/intro", "thinkish/action-plan"]
+          }
+        ]
+      },
+      {
+        "tab": "నిశ్శబ్దం",
+        "groups": [
+          {
+            "group": "పరిచయం",
+            "pages": ["nishabdham/parichayam"]
+          },
+          {
+            "group": "సాహిత్యం",
             "pages": [
-              "mind/how-to-convert-rejection-into-feedback"
+              "nishabdham/kavitalu",
+              "nishabdham/kathalu",
+              "nishabdham/alochanalu"
             ]
+          },
+          {
+            "group": "ప్రేరణ",
+            "pages": ["nishabdham/prerana"]
           }
         ]
       },
@@ -214,19 +225,10 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
+        "label": "Email me",
         "href": "mailto:avinashadluri@gmail.com"
-      },
-      {
-        "label": "Home",
-        "href": "https://avinash.sh"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
+    ]
   },
   "footer": {
     "socials": {

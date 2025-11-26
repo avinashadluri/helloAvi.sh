@@ -1,13 +1,33 @@
 ---
-title: "Computer Vision"
-description: "Image processing and computer vision applications"
-icon: "eye"
+title: "Computer Vision Notes"
+description: "How vision models support FlowOS health tracking, content creation, and documentation."
 ---
 
-# Computer Vision
+# Computer Vision Notes
 
-Coming soon! This section will explore various aspects of computer vision.
+Vision quietly supports many Avi projects—from GlucosePro charts to YouTube content.
 
-<Note>
-This page is under construction. Check back soon for detailed content on computer vision!
-</Note>
+## 1. Document & UI Parsing
+- **Tools**: LayoutLMv3 + Donut for parsing invoices, statements, and design mocks.
+- **Use case**: AviWealth uploads, extracting data into Notion + Sheets.
+
+## 2. Health & Wellness
+- **Glycemic logging**: Use OCR (Tesseract) to capture readings; cross-check with manual entries.
+- **Meal logging**: YOLOv8 models classify meal types for nutrition analysis.
+
+## 3. Content Automation
+- **Storyboarding**: Detect key frames from footage to auto-generate thumbnails.
+- **Subtitle alignment**: Whisper + gentle forced alignment for bilingual subtitles on Nishabdham videos.
+
+## 4. Tooling Stack
+- Python + FastAPI microservices.
+- Runs on Modal / RunPod GPUs when heavy, Cloudflare Workers w/ WebAssembly for lightweight filters.
+- Monitoring via Evidently (image drift) + Sentry.
+
+## 5. Getting Started Template
+1. Collect dataset (images, annotations via Label Studio).
+2. Train/fine-tune with Ultralytics or Detectron2.
+3. Deploy via BentoML; expose restful endpoint.
+4. Wire into FlowOS automation or Sentience Studio agent.
+
+Share improvements or datasets—vision is a team sport.

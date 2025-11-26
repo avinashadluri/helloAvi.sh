@@ -1,65 +1,38 @@
 ---
-title: "Service Level Indicators (SLIs)"
-description: "Measuring user experience with meaningful metrics"
-icon: "activity"
+title: "SLI Recipes"
+description: "Concrete indicators for latency, reliability, freshness, and business outcomes."
 ---
 
-# Service Level Indicators
+# SLI Recipes
 
-SLIs quantify how well a service is performing from the user’s perspective. Good SLIs are:
+Indicators are the ingredients of a good SLO. Here are the ones we rely on most.
 
-- **Representative** of real user journeys
-- **Quantifiable** and automatically measurable
-- **Controlled** by the team that owns the service
+## 1. Latency
+- **Definition**: time from request receipt to successful response (p50/p90/p95).
+- **Implementation**: OpenTelemetry spans with `http.server.duration`, aggregated in Prometheus.
+- **Dashboard**: contrast vs Core Web Vitals (frontend) and API calls.
 
----
+## 2. Reliability / Error Rate
+- **Definition**: `(failed requests / total requests)` per service + endpoint.
+- **Implementation**: HTTP status buckets, GraphQL errors, workflow job failures.
+- **Tip**: separate user errors vs platform errors to avoid noisy metrics.
 
-## Choosing SLIs
+## 3. Freshness / Data Lag
+- **Definition**: time between source event and availability in consumer system.
+- **Use case**: FlowOS dashboards fed from automations; Thinki.sh community stats.
+- **Implementation**: event timestamp vs ingest timestamp; alert if > threshold.
 
-1. Map critical user actions.
-2. Identify the signals that describe success or failure.
-3. Instrument the application to collect those signals.
+## 4. Business Outcomes
+- **Definition**: completion rate of key workflows (FlowOS ritual, AI agent task, Thinki.sh challenge).
+- **Implementation**: Fire event to Segment/PostHog; compute ratio vs started.
+- **Note**: great for product-led SLOs.
 
----
+## 5. Experience Metrics
+- **Frontend**: Core Web Vitals (LCP, INP, CLS) via Web-Vitals JS + Analytics.
+- **Mobile**: App start time, error-free sessions (Sentry), offline success rate.
 
-## Examples
+## 6. Storage + Queue Health
+- Useful for n8n and automation heavy flows.
+- Track backlog size, oldest message age, failure retries.
 
-**Frontend**
-
-- LCP p75
-- JS error rate
-- API call p95 latency
-
-**Backend**
-
-- Request success rate
-- Availability
-- Queue length
-
-**Business**
-
-- Checkout success ratio
-- Sign-up conversion
-
----
-
-## Implementing SLIs
-
-```typescript
-import { onLCP } from 'web-vitals';
-
-onLCP(metric => {
-  navigator.sendBeacon('/rum', JSON.stringify({ name: metric.name, value: metric.value }));
-});
-```
-
-Use a single export path for SLIs so dashboards and alerts stay consistent.
-
----
-
-## Reviewing SLIs
-
-- Track trends over time
-- Correlate with incidents
-- Retire SLIs that no longer map to user value
-
+Document SLIs in `/runbooks/sli/<service>.mdx` with query links so anyone can trace data lineage.

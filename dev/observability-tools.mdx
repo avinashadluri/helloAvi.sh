@@ -1,51 +1,45 @@
 ---
-title: "Observability Tools"
-description: "Platforms we rely on for metrics, traces, and logs"
-icon: "tool"
+title: "Observability Tooling & Stack"
+description: "Vendors, OSS, and scripts powering the Observability Galaxy."
 ---
 
-# Observability Tools
+# Observability Tooling & Stack
 
-A solid observability stack is a combination of collection agents, storage backends, and visualisation tools.
+Here’s the toolbox supporting the Observability Galaxy.
 
----
+## 1. Telemetry Ingest
+- **OpenTelemetry Collector** – standardizes traces/logs/metrics.
+- **Vector** – lightweight agent pushing logs to Loki/S3.
+- **AWS Kinesis Firehose** – archival for compliance workloads.
 
-## Metrics
+## 2. Storage & Query
+| Need | Tool | Why |
+| --- | --- | --- |
+| Metrics | Prometheus + CloudWatch | Open-source control + managed retention. |
+| Logs | Loki + S3 Glacier | Cost-effective, query via Grafana + Athena. |
+| Traces | Honeycomb | High-cardinality powerhouse for debugging. |
+| Replay | Replay.io | Visual context for frontend incidents. |
 
-- **Prometheus** – scraping and storing time series data.
-- **Grafana** – dashboards and alerting.
-- **CloudWatch / Stackdriver** – managed metrics in the cloud.
+## 3. Visualization & Alerting
+- **Grafana** dashboards with SLO panels, burn charts, cost overlays.
+- **Datadog** for exec-friendly dashboards and anomaly detection.
+- **Slackbot** (custom) posting daily SLO + cost digests.
+- **PagerDuty** integration with SLO alerts and on-call schedules.
 
-## Logs
+## 4. Developer Experience
+- `otel-cli` baked into template repos for quick instrumentation.
+- VS Code snippets for adding SLIs to services.
+- Runbook generator script scaffolds MDX for incidents.
 
-- **Loki / Elasticsearch** – log aggregation with structured search.
-- **Fluent Bit** – lightweight log forwarding agent.
-- **Sentry** – application error tracking.
+## 5. Cost Observability Tooling
+- **CloudZero** or **Finch** for spend allocation.
+- Custom Metabase dashboards fed by CUR (Cost & Usage Reports).
+- Alerts when spend deviates >10% week-over-week per product.
 
-## Traces
+## 6. Getting Started
+1. Add OpenTelemetry SDK to service (see template repo).
+2. Configure Collector via Helm chart (`infra/observability` folder).
+3. Create dashboards + alerts via Terraform modules.
+4. Document in `/runbooks/observability/tools/<service>.mdx`.
 
-- **Jaeger / Tempo** – distributed tracing backends.
-- **OpenTelemetry** – unified APIs and SDKs for traces, metrics, and logs.
-
-## Real User Monitoring (RUM)
-
-- **Datadog RUM** – browser and mobile instrumentation.
-- **New Relic Browser** – frontend performance insights.
-
----
-
-## Choosing Tools
-
-When selecting tools consider:
-
-- **Open standards** to avoid lock‑in.
-- **Cost of storage and retention.**
-- **Ease of integration** with your stack.
-- **Community and ecosystem support.**
-
----
-
-## Putting it together
-
-Use OpenTelemetry to emit telemetry once, send it to an agent, then fan out to the tools above depending on your needs.
-
+This stack evolves frequently; check the repo issues for upcoming experiments (e.g., Grafana Faro, SigNoz).

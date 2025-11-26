@@ -1,13 +1,35 @@
 ---
-title: "Deep Learning"
-description: "Neural networks and deep learning architectures"
-icon: "network-wired"
+title: "Deep Learning Notes"
+description: "From CNN/RNN essentials to foundation model fine-tuning in Sentience Studio."
 ---
 
-# Deep Learning
+# Deep Learning Notes
 
-Coming soon! This section will explore various aspects of deep learning.
+These are the patterns I reuse when moving from classical ML to deep learning workloads.
 
-<Note>
-This page is under construction. Check back soon for detailed content on deep learning!
-</Note>
+## 1. Core Architectures
+- **CNNs**: still relevant for document layout parsing + GlucosePro image analysis.
+- **RNNs/GRUs**: used sparingly; prefer Transformers even for sequences.
+- **Transformers**: default for language + multimodal experiments.
+
+## 2. Training Stack
+- **Frameworks**: PyTorch Lightning + Hugging Face Accelerate.
+- **Compute**: RunPod + Lambda Labs for spot GPU; on-prem for sensitive data.
+- **Experiment tracking**: Weights & Biases, MLflow for metadata.
+
+## 3. Fine-Tuning Strategy
+1. Start with adapter/LoRA to reduce cost.
+2. Use domain-specific datasets (Thinki.sh prompts, FlowOS transcripts).
+3. Evaluate with targeted benchmarks (guardrail dataset, task-specific metrics).
+4. Distill into smaller models for edge deployment when needed.
+
+## 4. Multimodal Experiments
+- Image + text journaling for FlowOS.
+- Audio + text for Nishabdham recitals (Whisper + GPT-4o audio).
+
+## 5. Responsible AI Hooks
+- Dataset audits, bias checks.
+- Red-team prompts documented alongside releases.
+- Human-in-the-loop review for new models touching finance/health.
+
+See the Generative AI page for agent-centric workflows.

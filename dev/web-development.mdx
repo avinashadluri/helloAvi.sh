@@ -1,200 +1,57 @@
 ---
-title: "Modern Web Development"
-description: "Exploring the latest trends, frameworks, and best practices in web development"
-icon: "globe"
+title: "Engineering Pods · Frontend & JS Ecosystem"
+description: "NeuroStack engineering pods covering JS tooling, micro frontends, and platform case studies."
 ---
 
-# Modern Web Development
+# Engineering Pods · JS & Frontend Systems
 
-Web development has evolved tremendously over the past few years. From the rise of modern JavaScript frameworks to the adoption of serverless architectures, the landscape continues to change rapidly. Here's my take on the current state and future of web development.
+Building resilient interfaces today means treating frontend as a system, not a single repo. This playbook captures the pods I'm running inside the **NeuroStack Engineering Deck**.
 
-## The Current Landscape
+## 1. JS Ecosystem State of the Union
 
-### Frontend Revolution
+| Layer | 2025 Pick | Notes |
+| --- | --- | --- |
+| Bundler | Vite + Rsbuild hybrid | Vite for DX, Rsbuild for enterprise perf. |
+| Runtime | Next.js App Router + Cloudflare Workers | SSR where it matters, edge for personalization. |
+| Type Safety | TypeScript 5.x + Type Challenges | Strict config + programmatic schema generation. |
+| Styling | Tailwind + Panda + design tokens | Tokens enforced via Style Dictionary + ESLint. |
+| Testing | Vitest + Playwright + Storybook interactions | Unified reports piped into Buildkite. |
 
-The frontend ecosystem has seen incredible innovation:
+## 2. Micro Frontends Playbook
 
-<CardGroup cols={2}>
-  <Card title="React Ecosystem" icon="react">
-    Next.js, Remix, and other React-based frameworks are pushing the boundaries
-    of what's possible
-  </Card>
+### Team Topology
+- **Core platform pod** owns design system, tokens, and shared API contracts.
+- **Feature pods** ship independently via Module Federation or edge-deployed widgets.
+- **Experience pod** monitors UX observability (Core Web Vitals, UX metrics from Replay.io).
 
-  <Card title="Vanilla JS Renaissance" icon="js">
-    Modern vanilla JavaScript and Web Components are making a comeback
-  </Card>
+### Composition Patterns
+1. **Shell + Slices** (Next.js shell + lazy remote slices).
+2. **Widget mesh** (Edge-hosted widgets embedded via capability tokens).
+3. **Story-driven docs** (Every slice has MDX docs, replay, and contract tests).
 
-  <Card title="Build Tools Evolution" icon="hammer">
-    Vite, esbuild, and SWC are making development faster than ever
-  </Card>
+### Anti-Patterns to Avoid
+- Shadow design systems per pod.
+- Runtime dependency collisions (use `@module-federation/manifest`).
+- Shipping without synthetic monitoring at composition boundaries.
 
-  <Card title="CSS Innovation" icon="paintbrush">
-    Tailwind CSS, CSS-in-JS, and modern CSS features are transforming styling
-  </Card>
-</CardGroup>
+## 3. Systems in the Wild
 
-## Key Trends I'm Watching
+| Engagement | What we shipped | Key learning |
+| --- | --- | --- |
+| Atlassian DS revamp | Multi-brand theme tokens + component profiling | Token pipelines must be observable. |
+| Bugcrowd UI refresh | Micro frontend migration + SSO hardening | Edge auth proxies simplify per-tenant theming. |
+| Thinki.sh | Static/interactive hybrid docs | Treat MDX as source-of-truth for product thinking. |
 
-### 1. Full-Stack Frameworks
+## 4. Trend Radar
 
-The lines between frontend and backend are blurring:
+- **React Server Components**: great for streaming dashboards; wrap with `swr` fallback for resilience.
+- **WASM-in-the-UI**: Piloting AssemblyScript validators for offline-first flows.
+- **AI-assisted DX**: Cursor + custom Copilot instructions for design-system linting.
+- **Design Token APIs**: Using `Style Dictionary` + GraphQL to serve tokens to native apps.
 
-```typescript
-// Next.js App Router with Server Components
-export default async function Page() {
-  const data = await fetch("https://api.example.com/data", {
-    cache: "force-cache",
-  });
+## 5. How to Use this Pod
 
-  return (
-    <div>
-      <ServerComponent data={data} />
-      <ClientComponent />
-    </div>
-  );
-}
-```
-
-### 2. Edge Computing
-
-Moving computation closer to users:
-
-<Accordion title="Benefits of Edge Computing">
-  - **Lower Latency**: Reduced round-trip times - **Better Performance**: Faster
-  response times - **Improved UX**: Near-instant interactions - **Cost
-  Efficiency**: Reduced bandwidth usage
-</Accordion>
-
-### 3. TypeScript Adoption
-
-TypeScript has become the standard for serious web development:
-
-```typescript
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  preferences: UserPreferences;
-}
-
-interface UserPreferences {
-  theme: "light" | "dark";
-  notifications: boolean;
-  language: string;
-}
-
-async function updateUser(id: string, updates: Partial<User>): Promise<User> {
-  // Type-safe user updates
-  return await api.users.update(id, updates);
-}
-```
-
-## Best Practices I Follow
-
-### Performance Optimization
-
-<AccordionGroup>
-  <Accordion title="Core Web Vitals">
-    - **LCP (Largest Contentful Paint)**: < 2.5s
-    - **FID (First Input Delay)**: < 100ms
-    - **CLS (Cumulative Layout Shift)**: < 0.1
-  </Accordion>
-  
-  <Accordion title="Code Splitting">
-    ```javascript
-    // Dynamic imports for route-based code splitting
-    const HomePage = lazy(() => import('./pages/Home'))
-    const AboutPage = lazy(() => import('./pages/About'))
-    ```
-  </Accordion>
-  
-  <Accordion title="Image Optimization">
-    ```jsx
-    import Image from 'next/image'
-    
-    <Image
-      src="/hero.jpg"
-      alt="Hero image"
-      width={800}
-      height={600}
-      priority
-      placeholder="blur"
-      blurDataURL="data:image/jpeg;base64,..."
-    />
-    ```
-  </Accordion>
-</AccordionGroup>
-
-### Accessibility First
-
-Accessibility is not an afterthought - it's built into every component:
-
-```jsx
-// Semantic HTML with proper ARIA attributes
-<button
-  type="button"
-  aria-label="Close modal"
-  aria-expanded={isOpen}
-  onClick={handleClose}
->
-  <CloseIcon aria-hidden="true" />
-</button>
-```
-
-## Tools and Technologies I Recommend
-
-### Development Stack
-
-| Category             | Technology   | Why I Choose It                       |
-| -------------------- | ------------ | ------------------------------------- |
-| **Framework**        | Next.js 14+  | Full-stack capabilities, great DX     |
-| **Styling**          | Tailwind CSS | Utility-first, fast development       |
-| **State Management** | Zustand      | Simple, lightweight, TypeScript-first |
-| **Database**         | Supabase     | PostgreSQL with real-time features    |
-| **Deployment**       | Vercel       | Seamless Next.js integration          |
-
-### Essential Tools
-
-<CardGroup cols={3}>
-  <Card title="VS Code" icon="code">
-    With extensions like Prettier, ESLint, and Tailwind IntelliSense
-  </Card>
-
-  <Card title="Figma" icon="figma">
-    For design collaboration and component systems
-  </Card>
-
-  <Card title="Linear" icon="linear">
-    For project management and issue tracking
-  </Card>
-</CardGroup>
-
-## Future Directions
-
-### What's Coming Next?
-
-1. **WebAssembly Integration**: Bringing near-native performance to the web
-2. **AI-Assisted Development**: Tools like GitHub Copilot and Cursor are changing how we code
-3. **Progressive Web Apps**: Bridging the gap between web and native apps
-4. **Micro-frontends**: Scaling frontend architecture for large teams
-
-<Tip>
-  The key to staying relevant in web development is continuous learning and
-  experimentation. Don't just follow trends - understand the problems they
-  solve.
-</Tip>
-
-## My Recent Projects
-
-I'm constantly building and experimenting. Here are some patterns I've been exploring:
-
-- **Server Components with Streaming**: Building faster, more interactive UIs
-- **Edge Functions**: Implementing dynamic functionality at the edge
-- **AI Integration**: Adding intelligent features to web applications
-- **Real-time Collaboration**: Building collaborative editing experiences
-
----
-
-Web development is an exciting field that's constantly evolving. The key is to focus on fundamentals while staying curious about new technologies and approaches.
-
-_What are your thoughts on the current state of web development? Feel free to reach out and share your perspectives!_
+1. Start with the state-of-the-union table to align stacks.
+2. Apply the micro frontend patterns that match your org topology.
+3. Reference real engagements to de-risk rollouts.
+4. Keep an eye on the radar; I update it monthly based on experiments inside MetaLabs + client work.

@@ -1,168 +1,35 @@
 ---
-title: "Applied AI Engineer"
+title: "NLP Systems"
+description: "Language stacks powering Thinki.sh, FlowOS, and Nishabdham experiences."
 ---
 
-# From Full Stack Developer to Applied AI Engineer: A Complete Guide
+# NLP Systems
 
-If you’re a TypeScript full stack developer, you’re already closer to being an Applied AI Engineer than you think.
-You don’t need a PhD in Machine Learning to build powerful AI-powered applications.
-Applied AI Engineers focus on integrating, orchestrating, and scaling AI models into real-world apps — and that’s exactly where your skills come in.
+Language is core to everything I build—technical docs, Telugu poetry, preventive thinking frameworks. Here’s how I approach NLP.
 
-⸻
+## 1. Text Processing Pipeline
+- **Ingest**: Markdown/MDX from repos, transcripts from Whisper, Notion exports.
+- **Cleaning**: LangChain text splitters (recursive) + custom Telugu normalizer.
+- **Embedding**: OpenAI text-embedding-3-small + Cohere rerankers.
+- **Storage**: Supabase pgvector + Pinecone for large datasets.
 
-What Is an Applied AI Engineer?
+## 2. Retrieval-Augmented Generation
+- Source: Thinki.sh frameworks, FlowOS runbooks, Nishabdham essays.
+- Guardrails: cite sources, highlight confidence, mark sensitive items.
+- Tools: LangChain, LlamaIndex, Vercel AI SDK for streaming responses.
 
-An Applied AI Engineer:
-	•	Does not train large models from scratch.
-	•	Does integrate existing AI models (e.g., GPT, Claude, LLaMA) into applications.
-	•	Bridges frontend, backend, and AI orchestration.
-	•	Focuses on user experience, scalability, and product value.
-	•	Works closely with product managers to deliver AI-powered features.
+## 3. Sentiment + Topic Models
+- Hugging Face transformers fine-tuned on bilingual dataset (English + Telugu).
+- Use cases: feedback triage, community moderation, poetry curation.
 
-Think of it as:
-Full Stack Developer ➡️ Full Stack + AI Integration & Product Thinking.
+## 4. Evaluation
+- Rouge/BLEU for summarization.
+- Custom rubric for translation accuracy (Telugu ↔ English).
+- Human review loops for culturally sensitive content.
 
-⸻
+## 5. Deployment Patterns
+- Edge functions for quick responses.
+- Batch jobs for offline processing (SageMaker Processing or Modal).
+- Slack/WhatsApp bots exposing NLP capabilities to teams/community.
 
-The 4-Phase Roadmap
-
-This is a 12-month structured plan to go from a strong full stack dev to an AI product builder.
-
-⸻
-
-Phase 1 — Foundations (Months 0–3)
-
-Goal: Understand AI basics and integrate your first models.
-
-Key Learning Areas:
-	•	LLM basics: tokens, embeddings, fine-tuning, RAG.
-	•	AI SDKs:
-	•	OpenAI SDK (JavaScript)
-	•	Hugging Face Transformers.js
-	•	LangChain.js / LlamaIndex.js
-	•	Prompt engineering fundamentals.
-
-Projects to Build:
-	1.	Chatbot with GPT-4 using React + Node.js.
-	2.	Text summarisation tool for pasted articles.
-	3.	AI code helper using OpenAI API.
-
-Outcome:
-You can make API calls to AI services, handle responses, and display them in a clean UI.
-
-⸻
-
-Phase 2 — Applied AI Development (Months 3–6)
-
-Goal: Move from experiments to production-grade AI features.
-
-Key Learning Areas:
-	•	Retrieval-Augmented Generation (RAG)
-	•	Store embeddings in Pinecone, Weaviate, or Supabase Vector.
-	•	Query documents and feed them into an LLM.
-	•	AI workflow orchestration:
-	•	Multi-step AI flows with LangChain.js or LlamaIndex.js.
-	•	Streaming responses for better UX.
-	•	Fine-tuning basics:
-	•	Use OpenAI fine-tuning or Hugging Face model training.
-	•	Error handling, retries, and AI output validation.
-
-Projects to Build:
-	1.	Knowledge base Q&A chatbot with document upload.
-	2.	AI-powered content moderation dashboard.
-	3.	GitHub README generator from project code.
-
-Outcome:
-You can integrate LLMs with vector databases, orchestrate multi-step workflows, and ship features to production.
-
-⸻
-
-Phase 3 — Scaling & Specialisation (Months 6–9)
-
-Goal: Build scalable, reliable, and multi-modal AI applications.
-
-Key Learning Areas:
-	•	Performance & cost optimisation:
-	•	Cache LLM outputs.
-	•	Batch requests to reduce API costs.
-	•	Multi-modal AI:
-	•	Image generation (DALL·E, Stability AI).
-	•	Speech-to-text (Whisper API).
-	•	Text-to-speech APIs.
-	•	Security & compliance:
-	•	Data anonymisation before sending to AI.
-	•	Implement AI safety filters.
-
-Projects to Build:
-	1.	AI assistant embedded into an existing SaaS app.
-	2.	Multi-modal productivity app (text + images + audio).
-	3.	AI-driven resume and portfolio generator.
-
-Outcome:
-You can handle AI features in high-traffic production systems with performance, security, and cost control in mind.
-
-⸻
-
-Phase 4 — Product Leadership (Months 9–12)
-
-Goal: Transition from “building AI features” to “driving AI strategy”.
-
-Key Learning Areas:
-	•	AI product management fundamentals:
-	•	Map AI capabilities to business goals.
-	•	Estimate ROI for AI features.
-	•	Developer enablement:
-	•	Build reusable AI components & libraries.
-	•	Document prompt libraries and AI workflows.
-	•	AI governance:
-	•	Ethical considerations.
-	•	Model evaluation frameworks.
-
-Projects to Build:
-	1.	AI-powered analytics dashboard for your own product.
-	2.	Internal AI component library for dev teams.
-	3.	Contribute to an open-source AI integration tool.
-
-Outcome:
-You’re positioned as an Applied AI Engineer / AI Product Engineer, capable of leading AI initiatives end-to-end.
-
-⸻
-
-Skills Checklist
-
-By the end of this journey, you should have mastered:
-	•	✅ Frontend AI integration (React + streaming responses).
-	•	✅ Backend orchestration (Node.js + AI SDKs).
-	•	✅ Prompt engineering & evaluation.
-	•	✅ RAG with vector databases.
-	•	✅ Model fine-tuning basics.
-	•	✅ Multi-modal AI integration.
-	•	✅ AI performance optimisation.
-	•	✅ AI UX design patterns.
-	•	✅ AI product thinking.
-
-⸻
-
-Career Positioning Statement
-
-When talking to recruiters, don’t say:
-
-“I’m learning AI.”
-
-Instead, say:
-
-“I’m a full stack engineer specialising in applied AI — I integrate and orchestrate AI models into user-facing applications, focusing on experience, scalability, and business impact.”
-
-⸻
-
-Next Steps
-
-If you already know React, Next.js, and Node.js:
-	1.	Build an AI-powered dashboard using Next.js + OpenAI + LangChain.js.
-	2.	Create 3–6 applied AI projects for your portfolio.
-	3.	Document them with a focus on problem, solution, and impact.
-
-This combination of technical depth and product awareness will make you highly competitive for Applied AI roles. "
-icon: "language"
-sidebarTitle: "Applied Ai engineer "
----
+Reuse these patterns for your own multilingual or knowledge-heavy projects.

@@ -1,21 +1,40 @@
 ---
-title: "Coding Standards & Best Practices"
-description: "Code quality, style guides, and development best practices"
-icon: "code-check"
+title: "Best-Practice Codex · Coding Standards"
+description: "Linting, docs, and review rituals that keep the NeuroStack codebase calm."
 ---
 
-# Coding Standards & Best Practices
+# Best-Practice Codex · Coding Standards
 
-Coming soon! This section will include:
+This codex is what every pod in the NeuroStack deck signs up for. It’s lightweight, automatable, and proven across Atlassian, Bugcrowd, and MetaLabs builds.
 
-- Code style guides
-- Linting and formatting setup
-- Code review practices
-- Testing strategies
-- Documentation standards
-- Performance best practices
+## 1. Contracts Before Code
+- RFC template in Notion + MDX artifact in repo (`/docs/rfcs/<slug>.mdx`).
+- API/schema files generated from source-of-truth (OpenAPI, GraphQL SDL, Zod).
+- All code samples in docs compile—use `markdownlint` + custom check to run snippets.
 
-<Note>
-  This page is under construction. Check back soon for comprehensive coding
-  standards!
-</Note>{" "}
+## 2. Linting Stack
+
+| Layer | Tool | Rule of thumb |
+| --- | --- | --- |
+| Language | TypeScript strict mode | `noImplicitAny`, `exactOptionalPropertyTypes`. |
+| Formatting | Biome (prev. Rome) | Replace Prettier + ESLint formatting for consistency. |
+| UX | eslint-plugin-jsx-a11y + custom rule for keyboard traps | Run in CI + pre-commit. |
+| Security | eslint-plugin-security + Semgrep policy pack | Block PRs when secrets/hardcoded tokens appear. |
+
+## 3. Review Rituals
+1. PR title uses [Conventional Commits].
+2. Description answers: Why? What changed? Testing notes? Rollback plan?
+3. Screenshots/demo links for UI changes. Include Replay or Loom for complex flows.
+4. Reviewer rotates weekly; enable `CODEOWNERS` + "shadow reviewer" for mentoring.
+
+## 4. Definition of Done (per story)
+- Tests added/updated (unit + integration + contract when API touched).
+- Docs touched if behavior changes (MDX, Storybook, Runbook).
+- Telemetry/SLO impact considered; dashboards updated.
+- Feature flags + kill switches documented.
+
+## 5. Measuring Adoption
+- Monthly lint failure report (GitHub Insights) + auto-comment suggestions.
+- Retro question: "Which standard saved you recently?" Collect stories to keep standards human.
+
+Clone this codex into your own team charter and adapt names/owners, but keep the spirit: clarity first, automation second, storytelling third.

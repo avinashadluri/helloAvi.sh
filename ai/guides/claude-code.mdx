@@ -1,238 +1,44 @@
 ---
-title: "Claude Code: The Ultimate Guide"
-description: "What It Is, Why It Matters, and How to Use It in Cursor"
-icon: "code"
+title: "Guide · Claude Code"
+description: "How I use Claude 3.5 for engineering work in Sentience Studio."
 ---
 
-# Claude Code: The Ultimate Guide (What It Is, Why It Matters, and How to Use It in Cursor)
+# Guide · Claude Code
 
-This is a comprehensive, practical guide to Claude Code—what it is, how it works, real-world workflows, and exactly how to install, authenticate, and use it inside the Cursor editor on macOS, Linux, and Windows (incl. WSL). Bookmarked code snippets included.
+Claude 3.5 excels at reasoning-heavy engineering tasks. Here’s my setup.
 
-⸻
+## 1. Custom Instructions
+```
+- Assume TypeScript-first stack.
+- Prefer step-by-step reasoning, but keep final answers concise.
+- Suggest tests + observability hooks.
+- Flag risks before proposing major changes.
+```
+Apply these both in Anthropic Console and Cursor.
 
-## What is Claude Code?
+## 2. Common Workflows
+- **RFC drafting**: provide context, constraints, desired outcomes; Claude returns outline + risks.
+- **Code refactors**: paste function + tests; ask for safer alternative.
+- **Design system docs**: feed component API + usage guidelines for copy polish.
+- **Agent eval writing**: generate adversarial prompts + scoring rubrics.
 
-Claude Code is Anthropic’s agentic coding tool that “lives in your terminal.” It can read & edit files, run commands, create commits/PRs, and plug into tools via MCP—so you can describe what you want and let it plan and do the busywork. Think: build features from a spec, debug failing tests, resolve merge conflicts, and prep release notes—without leaving your editor.
+## 3. Tooling
+- Use the Claude VS Code extension or Cursor integration.
+- For long files, host gists + share URLs; Claude handles retrieval better.
+- Enable "Code Execution" in Anthropic Console for quick prototypes.
 
-### Why developers like it
-- Runs in your terminal (and inside IDEs like Cursor), not “yet another chat box.”
-- Takes action: edits files, runs shell/git, opens diffs, raises PRs.
-- Composable & scriptable (pipe logs, run in CI, trigger slash-commands).
+## 4. Guardrails
+- Don’t paste secrets or proprietary customer data.
+- Cross-check suggestions; treat Claude as pair-programmer, not autopilot.
+- Log key decisions in PR/Linear for audit trail.
 
-Anthropic also added always‑on security reviews in Claude Code—continuous checks that flag vulnerabilities before code ships.
-
-⸻
-
-## Key Capabilities (at a glance)
-- Build from prose: “Add passwordless magic link login” → plan → code → tests → diffs.
-- Deep codebase navigation: ask anything about structure, patterns, or a module’s intent.
-- Automations: lint fixes, conflict resolution, release notes, changelog, PR templates.
-- Actions: read/modify files, run bash, commit, open PRs; customizable via slash commands.
-- MCP: connect external tools (e.g., Drive, Jira, Slack) so Claude can pull context or act.
-
-⸻
-
-## Installation & Setup
-
-### System requirements
-
-macOS 10.15+, Ubuntu/Debian, or Windows 10+ (WSL or Git Bash), Node.js 18+, 4GB+ RAM, internet.
-
-### Install (standard npm)
-
-```bash
-npm install -g @anthropic-ai/claude-code
-cd your-project
-claude
+## 5. Sample Prompt
+```
+You are pairing with me on FlowOS. Given the following React server component... 
+1. Identify DX issues.
+2. Propose improved structure.
+3. Suggest tests + telemetry.
+Code:
 ```
 
-Avoid `sudo npm -g`. If permissions bite, see the docs’ troubleshooting.
-
-### Install (native binary, beta)
-
-**macOS/Linux/WSL**
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-**Windows PowerShell**
-
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
-Then `claude doctor` to verify.
-
-### Authenticate
-
-When you first run `claude`, pick one of:
-1. Anthropic Console (OAuth) – requires billing enabled.
-2. Claude App Pro/Max account – one subscription for web + terminal.
-3. Enterprise via Bedrock/Vertex.
-
-⸻
-
-## Using Claude Code in the Cursor Editor
-
-Claude Code provides a VS Code–style IDE integration that works with Cursor. You just run `claude` in the integrated terminal; the extension auto‑installs and enables features like diff viewing, selection context sharing, and quick launch.
-
-### One‑time setup in Cursor
-1. Open Cursor.
-2. Open the integrated terminal (Ctrl/⌘ + backtick).
-3. Run:
-
-```bash
-claude
-```
-
-If the CLI for your IDE isn’t on PATH, enable Cursor’s shell command via Command Palette (you should have a `cursor` command available).
-
-### Bring your own Anthropic API key (optional)
-
-Cursor supports custom provider keys (OpenAI, Anthropic, Google, Azure, Bedrock). In Cursor → Settings → Models → API Keys, paste your Anthropic key and Verify. Some features like Tab Completion still use Cursor’s built‑in models; chat/inline tasks can use your key.
-
-Tip: If you’re a heavy Claude user, adding your own Anthropic key in Cursor can reduce costs/limits compared to only using Cursor’s bundled quota.
-
-⸻
-
-## First 5 Minutes: Core Commands
-
-### Start interactive REPL
-
-```bash
-claude
-```
-
-- Type instructions, paste errors, or ask questions.
-- Use slash commands (`/help`, `/clear`, `/config`, `/model`, `/review`, etc.).
-
-### One‑shot (print) mode
-
-```bash
-claude -p "Explain the architecture of this repo"
-cat server.log | claude -p "find any auth errors and summarize"
-```
-
-Common flags: `--model`, `--verbose`, `--max-turns`, `--add-dir`, `--output-format json`.
-
-### Useful slash commands
-- `/init` → creates a `CLAUDE.md` guide for your project
-- `/review` → code review
-- `/cost` → token usage stats
-- `/memory` → edit memory files
-- `/mcp` → connect/disconnect tool servers
-- `/terminal-setup` → fix Shift+Enter newline in terminal apps
-
-⸻
-
-## Real‑Time, High‑Leverage Use Cases (with prompts)
-1. **Debug a flaky test**
-
-   *Our Jest suite times out on CI. Read the test and related modules; identify root cause; fix with diffs and run just the affected tests.*
-
-   Why this works: Claude can open the test, follow imports, propose diffs, and run the focused test command.
-
-2. **Feature from spec**
-
-   *Implement “magic link login” behind a feature flag. Create API endpoint, email template, and client flow. Include unit/integration tests. Use existing auth utils.*
-
-   Claude generates a plan → edits files → runs linters/tests → suggests PR.
-
-3. **Large‑scale refactor**
-
-   *Migrate date utils from moment.js to dayjs. Keep behavior parity, update 15 call sites, add migration notes, and open a PR.*
-
-   It navigates your repo, updates imports/usages, and validates with tests.
-
-4. **Security review (continuous)**
-
-   *Review recent diffs for injection risks, unsafe deserialization, and SSRF. Add comments and a checklist to PR #123.*
-
-   Leverages Claude Code’s security review capability to catch issues early.
-
-5. **Ops & observability triage**
-
-   ```bash
-   tail -f app.log | claude -p "If error spike > 5/min or you see auth anomalies, summarize and propose remediation steps."
-   ```
-
-   Streams logs through Claude for on‑the‑fly analysis.
-
-6. **Docs & release notes**
-
-   *Generate release notes from merged PRs since v1.8. Tag breaking changes and write upgrade steps.*
-
-   Automates the boring but important bits.
-
-⸻
-
-## Example: End‑to‑End Workflow in Cursor
-
-**Goal:** Fix a production bug and ship a patch.
-1. Open Cursor terminal → `claude`
-2. Paste stack trace → “Investigate TypeError in payment-handler.ts from Sentry. Identify root cause; propose minimal fix; run unit tests.”
-3. Accept diffs in Cursor’s IDE diff view.
-4. Run tests (Claude can run the command and parse failures).
-5. `/review` to sanity‑check changes; `/security-review` (custom command) for security pass.
-6. Commit & PR (Claude prepares messages/PR body).
-
-⸻
-
-## Power User Patterns
-- **Custom slash commands:** create reusable prompts that run bash first, include file refs, and set allowed tools. Example `.claude/commands/optimize.md` (project scope) runs `git status`, `git diff`, then instructs Claude to propose a single commit.
-- **Model selection:**
-  - `--model sonnet` for balanced coding
-  - `--model opus` for heavy reasoning (slower/costlier)  
-  Switch on the fly: `/model sonnet`.
-- **Scripting & CI:**  
-  `claude -p --output-format json` → parseable output for pipelines; `--max-turns` to bound agentic steps.
-- **MCP:** connect GitHub/Jira/Docs so Claude can fetch specs, comment on PRs, or file tickets directly. Use `/mcp` to manage.
-
-⸻
-
-## Pricing & Plans (quick orientation)
-- **Claude Pro / Max:** subscription tiers; Pro adds more usage and access to Claude Code in your terminal; Max increases limits and unlocks early features/priority.
-- **API pricing:** requests are billed on input/output tokens; certain server‑side tools can add usage‑based fees.
-- **Cursor with your own key:** you can add your Anthropic key in Cursor Settings to pay at Anthropic rates and avoid hitting Cursor’s included quotas for Claude‑backed features. Some proprietary features (e.g., Tab Completion) still use Cursor’s models.
-
-⸻
-
-## Troubleshooting Cheatsheet
-- **“CLI not found in Cursor”** → ensure the `cursor` shell command is installed (Command Palette), then re‑run `claude` in the integrated terminal.
-- **API key not validating in Cursor** → double‑check provider selection, clear stale keys, verify billing status on Anthropic; some users report issues fixed by simplifying settings or upgrading tier.
-- **Windows** → prefer WSL for best experience; native Git Bash works with extra path config; verify with `claude doctor`.
-
-⸻
-
-## Copy‑Paste Setup (Cursor)
-1. Install Claude Code
-
-   ```bash
-   npm install -g @anthropic-ai/claude-code
-   # or: curl -fsSL https://claude.ai/install.sh | bash
-   ```
-
-2. Open Cursor → Terminal → `claude`
-3. Authenticate (Anthropic Console or Claude Pro/Max)
-4. (Optional) Add your Anthropic API key: Cursor → Settings → Models → API Keys → Anthropic → Verify
-5. Test:
-
-   ```bash
-   claude -p "List the top 5 modules in this repo and any obvious issues"
-   ```
-
-6. Enable IDE enhancements: in a Claude session, run `/config` and set diff viewer → “auto.”
-
-⸻
-
-## Handy Reference
-- **CLI commands & flags** (REPL, print mode, piping, models, verbosity): Anthropic docs.
-- **Slash commands** (built‑ins, custom, MCP prompts, front‑matter): Anthropic docs.
-- **IDE (Cursor) integration:** auto‑install from terminal, diff viewing, selection context sharing, hotkeys.
-
-⸻
-
-## Final Take
-
-If you already live in Cursor, adding Claude Code gives you a powerful, terminal‑native agent that can plan, edit, run, and review—while Cursor handles great inline UX. Start with `claude` in the integrated terminal, wire in your Anthropic key if you’re a heavy user, and level up with custom slash commands + MCP as you go.
+Happy pairing!

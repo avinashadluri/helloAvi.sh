@@ -1,61 +1,48 @@
 ---
-title: "Service Level Objectives (SLOs)"
-description: "Setting targets and error budgets that keep systems reliable"
-icon: "target"
+title: "SLO Playbook"
+description: "Practical guide for setting, tracking, and iterating on service level objectives."
 ---
 
-# Service Level Objectives
+# SLO Playbook
 
-SLOs define the reliability targets for your service. They bridge the gap between raw SLIs and external SLAs.
+Service Level Objectives anchor reliability discussions. Here’s how we set them across AviEngine, FlowOS, and Sentience Studio.
 
----
+## 1. Pick the Right SLI First
+- Start with customer journey (sign-in, run workflow, call agent).
+- Choose indicators: latency p95, error rate, freshness, throughput.
+- Validate data availability before committing.
 
-## Anatomy of an SLO
+## 2. Craft the Objective
+- Format: "Measure ≤ Target for % of requests over rolling window".
+- Example: "FlowOS Automations p95 latency <= 700ms for 99% of runs in 28d window".
+- Tie objective to user outcome (fast automations, reliable agents, etc.).
 
-- **Metric** – which SLI is being targeted.
-- **Threshold** – the numeric goal (e.g., 99.95% availability).
-- **Time window** – the period over which it is measured.
+## 3. Error Budgets & Guardrails
+- Error budget = 1 - SLO (e.g., 1%).
+- Track burn rates (1h, 6h, 24h). Alert roles when exceeding policy.
+- Link features/experiments to budget consumption.
 
----
+## 4. Review Cadence
+- Weekly SLO review: status, burn, actions.
+- Monthly: re-evaluate if SLO still meaningful; adjust targets based on data + business goals.
+- Post-incident: decide whether threshold/indicator needs revision.
 
-## Error Budgets
+## 5. Tooling
+- Nobl9 / Sloth / custom calculators generate SLO configs for Prometheus.
+- Grafana dashboards with error budget viz + annotation for deployments.
+- Slack bot posts SLO digests with CTA to relevant runbooks.
 
+## 6. Templates
+
+```md
+### SLO Card
+- Service:
+- Indicator:
+- Target:
+- Window:
+- Alert policy:
+- Owners:
+- Links: dashboards, runbooks, repos
 ```
-error_budget = 1 - SLO
-```
 
-The error budget quantifies how much unreliability is acceptable. When the budget is exhausted:
-
-- Pause risky releases
-- Focus on reliability work
-- Communicate status to stakeholders
-
----
-
-## Defining SLOs Step by Step
-
-1. Start from user journeys.
-2. Pick the most critical SLIs for each journey.
-3. Choose an achievable target with historical data.
-4. Set the measurement window (rolling 30 days, calendar month, etc.).
-5. Document owners and review cadence.
-
----
-
-## Example SLOs
-
-| Service            | SLI             | SLO            |
-|-------------------|-----------------|----------------|
-| API Gateway        | Availability    | 99.95% monthly |
-| Search             | p95 latency     | ≤300ms         |
-| Checkout           | Success rate    | ≥99.8%         |
-| Frontend LCP       | LCP p75         | ≤2.5s          |
-
----
-
-## Operating with SLOs
-
-- Plot burn rate dashboards.
-- Alert on fast-burn conditions (e.g., 2% of budget consumed in 1 hour).
-- Review SLOs quarterly to ensure they still reflect user expectations.
-
+Use this playbook when onboarding a new service or revisiting objectives for an existing one.

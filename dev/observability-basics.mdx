@@ -1,44 +1,31 @@
 ---
-title: "Observability Basics"
-description: "Core principles and pillars of observing modern systems"
-icon: "eye"
+title: "Observability Galaxy · Primer"
+description: "A quickstart on SLAs, SLOs, SLIs, and how we visualize reliability."
 ---
 
-# Observability Basics
+# Observability Galaxy · Primer
 
-Observability is the ability to understand a system's internal state from its external outputs.
-This guide covers the foundations you need before diving into SLIs, SLOs, and SLAs.
+Before diving into playbooks and tooling, this primer explains how I treat observability inside AviEngine and FlowOS.
 
----
+## 1. Vocabulary
+- **SLA (Service Level Agreement)** – External promise; contractual.
+- **SLO (Service Level Objective)** – Internal target; drives engineering focus.
+- **SLI (Service Level Indicator)** – Measurable metric (latency, errors, freshness, etc.).
+- **Error Budget** – 1 - SLO. Spend it intentionally on launches, migrations, experiments.
 
-## The Three Pillars
+## 2. Telemetry Pillars
+1. **Logs** – Structured JSON shipped via OpenTelemetry → Vector → Loki.
+2. **Metrics** – Prometheus + CloudWatch, aggregated into Honeycomb and Grafana dashboards.
+3. **Traces** – OpenTelemetry tracing, correlated with session replay for frontend contexts.
 
-- **Logs** – immutable event records. Useful for debugging and auditing.
-- **Metrics** – numeric measurements over time. Ideal for dashboards and alerting.
-- **Traces** – end-to-end request paths. Useful for understanding latency and dependencies.
+## 3. Dashboard Anatomy
+- Executive view: SLA compliance, uptime, cost overlay.
+- Pod view: SLO burn-down, top incidents, regression alerts.
+- Feature view: specific FlowOS workflow or Sentience Studio agent performance.
 
----
+## 4. Rituals
+- **Daily**: Check burn rates via Slack digest.
+- **Weekly**: Incident narrative review (see `dev/observability.mdx`).
+- **Monthly**: Cost observability sync—compare spend vs value.
 
-## Telemetry Pipeline
-
-1. Instrument code with open standards such as [OpenTelemetry](https://opentelemetry.io).
-2. Export data to a collector or agent.
-3. Store data in a backend (Prometheus, Jaeger, etc.).
-4. Visualise and alert with dashboards.
-
----
-
-## Key Practices
-
-- **Contextual logging** – include correlation IDs and user info.
-- **High-cardinality metrics** – carefully label; avoid unbounded labels.
-- **Sampling** – control volume of traces and logs to manage cost.
-- **Retention & compliance** – define how long telemetry is stored.
-
----
-
-## Next steps
-
-Once you understand the basics, dive into the specific guides on
-SLIs, SLOs, and SLAs to tie observability to reliability commitments.
-
+Use the remaining pages in this section for deeper dives into SLO/SLI craft and tooling.

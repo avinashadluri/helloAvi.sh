@@ -1,21 +1,49 @@
 ---
-title: "Developer Tools & Setup"
-description: "Essential tools, configurations, and setups for modern development"
-icon: "wrench"
+title: "Systems in the Wild · Toolchains"
+description: "Hands-on notes from Atlassian, Bugcrowd, MetaLabs, and FlowOS deliveries."
 ---
 
-# Developer Tools & Setup
+# Systems in the Wild · Toolchains
 
-Coming soon! This section will cover:
+Consider this the field journal for the NeuroStack deck—real implementations, stack choices, and what I’d repeat or avoid.
 
-- IDE setup and configurations
-- Essential developer tools
-- Terminal and shell configurations
-- Git workflows and best practices
-- Development environment setup
-- Productivity tips and tricks
+## Atlassian · Design System Acceleration
 
-<Note>
-  This page is under construction. Check back soon for detailed tool
-  recommendations!
-</Note>{" "}
+- **Stack**: Yarn workspaces, Storybook, Vite, Chromatic, Playwright visual tests.
+- **Key Moves**:
+  - Created token pipeline (Style Dictionary → Figma → codegen).
+  - Automated release notes + change logs per component.
+  - Observability tie-in: Lighthouse CI + Sentry performance budgets.
+- **Lesson**: Invest in docs-as-code (MDX) so 100+ teams can self-serve.
+
+## Bugcrowd · Security Platform Refresh
+
+- **Stack**: Next.js, Module Federation, GraphQL Mesh, LaunchDarkly, Datadog RUM.
+- **Key Moves**:
+  - Built incremental migration path: legacy Ember ↔ new React host.
+  - Added feature flag hygiene checklist tied to SLO budgets.
+  - Embedded SRE partner in UI pod for joint incident reviews.
+- **Lesson**: Micro frontends succeed only if incident tooling is shared.
+
+## MetaLabs / FlowOS · Builder Lab
+
+- **Stack**: Next.js App Router, Turbo Repo, Prisma + PlanetScale, n8n, Supabase Auth.
+- **Key Moves**:
+  - Created "FlowOS Rituals" content pipeline (Notion → MDX → site).
+  - Wired OpenAI + Anthropic agents with eval harness (LangSmith).
+  - Added background jobs via Cloudflare Queues for automations.
+- **Lesson**: Treat content + automations as first-class packages (versioned, tested).
+
+## Tooling Checklist
+
+| Layer | Default | Notes |
+| --- | --- | --- |
+| Package manager | pnpm | Workspace friendly, strict lockfiles. |
+| Linting | ESLint + Biome | TS + MDX linting with consistent formatting. |
+| CI | GitHub Actions + Buildkite | GH for lint/unit, BK for heavy integration suites. |
+| Secrets | Doppler + AWS Parameter Store | Works across local + prod. |
+| Monitoring | OpenTelemetry → Honeycomb/Grafana/Sentry | Same schema for frontend + backend. |
+
+## Request Access
+
+Need template repos, infra modules, or additional runbooks? Ping me via the Social Constellation page with context and I’ll share the relevant resources.

@@ -1,13 +1,41 @@
 ---
-title: "AI Ethics"
-description: "Responsible AI development and ethics"
-icon: "scales"
+title: "Responsible AI & Red Teaming"
+description: "Guardrails, evaluation, and incident response for Sentience Studio agents."
 ---
 
-# AI Ethics
+# Responsible AI & Red Teaming
 
-Coming soon! This section will explore various aspects of ai ethics.
+Ethics is a practice, not a checkbox. Here’s how we keep Sentience Studio agents safe.
 
-<Note>
-This page is under construction. Check back soon for detailed content on ai ethics!
-</Note>
+## 1. Guardrail Checklist
+- Define allowed/disallowed topics per agent.
+- Mask PII, financial, or health data unless explicit consent.
+- Require citations for claims; link to source doc + timestamp.
+- Keep human approval in the loop for irreversible actions.
+
+## 2. Red Teaming Script
+1. Collect "what could go wrong" scenarios (bias, hallucination, leakage).
+2. Craft attack prompts (jailbreaks, prompt injection, social engineering).
+3. Run through harness + log outcomes.
+4. Patch prompts/tools, rerun until mitigated.
+
+## 3. Incident Response
+- Triage severity; pause agent if necessary.
+- Notify stakeholders (Slack + status page).
+- Publish incident narrative (see Observability section).
+- Share remediation + timeline.
+
+## 4. Transparency
+- Every agent page lists: model, data sources, guardrails, owners, last audit date.
+- Provide "Why am I seeing this?" explanation in UI.
+
+## 5. Compliance & Privacy
+- Store logs securely, respect user deletion requests.
+- Follow regional regulations (GDPR, Australian Privacy Act).
+
+## 6. Tooling
+- Lakera Guard, Guardrails AI, and custom regex/pattern checks.
+- Prompt injection detectors for Vercel Edge functions.
+- Truelens for bias/toxicity scoring.
+
+If you’re deploying your own agents, fork this checklist and keep iterating—responsibility is shared.
