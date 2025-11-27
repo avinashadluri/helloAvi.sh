@@ -5,7 +5,7 @@ description: "End-to-end testing strategy for Jest, Playwright, Cypress, Storybo
 
 # Testflight Lab · Quality Strategy
 
-Testing is the guardrail that lets us ship fast across AviEngine, FlowOS, and Sentience Studio. This lab outlines the layers and tooling we use.
+Testing is the guardrail that lets us ship fast across the Dev stack, the productivity lab, and the AI lab. This guide outlines the layers and tooling we use.
 
 ## 1. Strategy Overview
 - **Shift left**: contract tests + component stories before API wiring.
@@ -23,7 +23,7 @@ Testing is the guardrail that lets us ship fast across AviEngine, FlowOS, and Se
 | API Contracts | Pactflow + OpenAPI tests | PR fails if breaking change detected. |
 | AI Eval | LangSmith + custom scripts | Track toxicity, hallucination, guardrail coverage. |
 
-## 3. Recipe: Adding a FlowOS Feature
+## 3. Recipe: Adding a Productivity Feature
 1. Write MDX spec + stub Storybook story.
 2. Add Vitest unit tests for hooks + utilities.
 3. Add Playwright scenario hitting new workflow.

@@ -1,37 +1,42 @@
----
-title: "FlowOS Stack Behind This Blog"
+title: "Productivity Stack Behind This Blog"
 description: "Tools, infrastructure, and rituals powering blog.avinash.sh, MetaLabs, and the Avi network."
+
 ---
 
-# FlowOS Stack Behind This Blog
+# Productivity Stack Behind This Blog
 
 The blog isn’t just MDX—it's the front door to the Avi ecosystem. Here’s the stack keeping it humming.
 
 ## Content & Knowledge
+
 - **MDX + Mintlify**: All narratives live alongside code; easy to version.
 - **Notion**: Editorial calendar + research vault.
 - **Heptabase**: Visual essay planning + Thinki.sh frameworks.
 
 ## Infrastructure
+
 - **Next.js (Mintlify)** deployed on Vercel.
 - **Edge cache**: Cloudflare proxies heavy assets.
 - **Analytics**: Plausible (privacy-friendly), PostHog for product signals.
 - **Assets**: UploadThing + S3 for media.
 
 ## Developer Experience
+
 - **Cursor + GitHub Copilot** for AI-assisted writing/coding.
 - **Biome + ESLint** keep MDX + TS consistent.
 - **CI**: GitHub Actions running lint, link-checker, screenshot tests.
 - **Preview stacks**: Vercel preview URLs shared in Linear for review.
 
 ## Automations
+
 - `publish.yml` workflow tags posts, updates RSS, pings newsletter.
 - n8n flow sends weekly digest based on `Latest Pulse` entries.
 - Zapier pushes featured reads to LinkedIn + WhatsApp broadcast.
 
 ## Rituals
+
 - Monday: backlog grooming + Now Building ticker update.
-- Wednesday: Draft + review new artifact (Dev/FlowOS/AI/Books).
+- Wednesday: Draft + review new artifact (Dev/Productivity/AI/Books).
 - Friday: Publish + send Social Constellation highlights.
 
 Steal this stack wholesale or remix; the emphasis is on open tooling + repeatable rituals.

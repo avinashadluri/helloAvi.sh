@@ -1,7 +1,8 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Avinash.sh",
+  "theme": "palm",
+  "name": "Avi",
+  "tagline": "Build. Think. Write.",
   "colors": {
     "primary": "#4f46e5",
     "light": "#07C983",
@@ -22,7 +23,7 @@
           },
           {
             "group": "About Me",
-            "pages": ["about"]
+            "pages": ["about/professional", "about/personal"]
           },
           {
             "group": "Social",
@@ -120,7 +121,7 @@
         ]
       },
       {
-        "tab": "Australia",
+        "tab": "Aussie",
         "groups": [
           {
             "group": "Getting Started",
@@ -174,7 +175,7 @@
         ]
       },
       {
-        "tab": "Thinki.sh",
+        "tab": "Thinkish",
         "groups": [
           {
             "group": "Playbooks",
@@ -187,7 +188,7 @@
         "groups": [
           {
             "group": "పరిచయం",
-            "pages": ["nishabdham/parichayam"]
+            "pages": ["nishabdham/parichayam", "nishabdham/intro"]
           },
           {
             "group": "సాహిత్యం",
@@ -200,23 +201,6 @@
           {
             "group": "ప్రేరణ",
             "pages": ["nishabdham/prerana"]
-          }
-        ]
-      },
-      {
-        "tab": "నిశ్శబ్దం",
-        "groups": [
-          {
-            "group": "Intro",
-            "pages": [
-              "nishabdham/intro"
-            ]
-          },
-          {
-            "group": "Kathalu",
-            "pages": [
-              "nishabdham/kathalu"
-            ]
           }
         ]
       }

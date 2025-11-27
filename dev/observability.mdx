@@ -9,7 +9,7 @@ Observability is more than dashboards; it’s storytelling plus cost awareness.
 
 ## 1. Incident Narrative Template
 
-```md
+```text
 ### Context
 - Date/time, impacted services, trigger.
 
@@ -29,7 +29,7 @@ Observability is more than dashboards; it’s storytelling plus cost awareness.
 - Owners + due dates + follow-up links.
 ```
 
-- Narratives live in `/runbooks/incidents/<id>.mdx` with tags (SLO, service, severity).
+- Narratives live in `/runbooks/incidents/[id].mdx` with tags (SLO, service, severity).
 - Share summaries in weekly ops review + Slack #observability channel.
 
 ## 2. Blameless Culture Checklist
@@ -39,8 +39,8 @@ Observability is more than dashboards; it’s storytelling plus cost awareness.
 
 ## 3. Cost Observability
 - Pipe AWS/GCP billing data into Metabase + Looker Studio.
-- Tag resources per product (MetaLabs, FlowOS, Sentience Studio) + environment.
-- Create **Cost SLO**: e.g., "MetaLabs infra <$4.5k/month"; treat overruns like incidents.
+- Tag resources per product (MetaLabs, productivity suite, AI lab) + environment.
+- Create **Cost SLO**: e.g., "MetaLabs infra under $4.5k/month"; treat overruns like incidents.
 
 ## 4. Burn Rate Dashboard
 - 1h, 6h, 24h burn charts with thresholds.

@@ -19,11 +19,11 @@ Indicators are the ingredients of a good SLO. Here are the ones we rely on most.
 
 ## 3. Freshness / Data Lag
 - **Definition**: time between source event and availability in consumer system.
-- **Use case**: FlowOS dashboards fed from automations; Thinki.sh community stats.
+- **Use case**: Productivity dashboards fed from automations; Thinki.sh community stats.
 - **Implementation**: event timestamp vs ingest timestamp; alert if > threshold.
 
 ## 4. Business Outcomes
-- **Definition**: completion rate of key workflows (FlowOS ritual, AI agent task, Thinki.sh challenge).
+- **Definition**: completion rate of key workflows (productivity ritual, AI agent task, Thinki.sh challenge).
 - **Implementation**: Fire event to Segment/PostHog; compute ratio vs started.
 - **Note**: great for product-led SLOs.
 
