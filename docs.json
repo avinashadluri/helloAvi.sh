@@ -1,7 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "palm",
-  "name": "Avi",
+  "name": "helloavi",
+  "logo": {
+    "light": "/helloavi-logo.svg",
+    "dark": "/helloavi-logo.svg"
+  },
   "tagline": "Build. Think. Write.",
   "colors": {
     "primary": "#4f46e5",
