@@ -1,0 +1,46 @@
+/* Custom CSS to increase logo size in Mintlify */
+nav a[href="/"] img,
+nav a[href="/"] svg,
+header a[href="/"] img,
+header a[href="/"] svg,
+a[href="/"] img,
+a[href="/"] svg {
+  height: 80px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin-left: -3px !important;
+  margin-top: 5px !important;
+}
+
+/* Alternative selectors for Mintlify logo */
+[data-testid="logo"] img,
+[data-testid="logo"] svg,
+.logo img,
+.logo svg {
+  height: 80px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin-left: -3px !important;
+  margin-top: 5px !important;
+}
+
+/* More specific selectors */
+nav > a > img,
+nav > a > svg {
+  height: 80px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin-left: -3px !important;
+  margin-top: 5px !important;
+}
+
+/* Target any image in the first nav link */
+nav a:first-child img,
+nav a:first-child svg {
+  height: 80px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin-left: -3px !important;
+  margin-top: 5px !important;
+}
+
