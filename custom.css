@@ -5,9 +5,9 @@ header a[href="/"] img,
 header a[href="/"] svg,
 a[href="/"] img,
 a[href="/"] svg {
-  height: 80px !important;
+  height: 150px !important;
   width: auto !important;
-  max-width: 200px !important;
+  max-width: 300px !important;
   margin-left: -3px !important;
   margin-top: 5px !important;
 }
@@ -17,9 +17,9 @@ a[href="/"] svg {
 [data-testid="logo"] svg,
 .logo img,
 .logo svg {
-  height: 80px !important;
+  height: 150px !important;
   width: auto !important;
-  max-width: 200px !important;
+  max-width: 300px !important;
   margin-left: -3px !important;
   margin-top: 5px !important;
 }
@@ -27,9 +27,9 @@ a[href="/"] svg {
 /* More specific selectors */
 nav > a > img,
 nav > a > svg {
-  height: 80px !important;
+  height: 150px !important;
   width: auto !important;
-  max-width: 200px !important;
+  max-width: 300px !important;
   margin-left: -3px !important;
   margin-top: 5px !important;
 }
@@ -37,9 +37,9 @@ nav > a > svg {
 /* Target any image in the first nav link */
 nav a:first-child img,
 nav a:first-child svg {
-  height: 80px !important;
+  height: 150px !important;
   width: auto !important;
-  max-width: 200px !important;
+  max-width: 300px !important;
   margin-left: -3px !important;
   margin-top: 5px !important;
 }
