@@ -193,21 +193,44 @@
         "tab": "నిశ్శబ్దం",
         "groups": [
           {
-            "group": "పరిచయం",
-            "pages": ["nishabdham/parichayam", "nishabdham/intro"]
+            "group": "Home",
+            "pages": ["nishabdham/intro"]
           },
           {
-            "group": "సాహిత్యం",
-            "pages": [
-              "nishabdham/kavitalu",
-              "nishabdham/kathalu",
-              "nishabdham/naa-gudi",
-              "nishabdham/alochanalu"
-            ]
+            "group": "📕 కథలు",
+            "pages": ["nishabdham/kathalu"]
           },
           {
-            "group": "ప్రేరణ",
-            "pages": ["nishabdham/prerana"]
+            "group": "📙 ఆధునిక కవిత్వం",
+            "pages": ["nishabdham/adhunika-kavithvam"]
+          },
+          {
+            "group": "📗 రేవనలిజం",
+            "pages": ["nishabdham/revanalism"]
+          },
+          {
+            "group": "📝 అభిప్రాయాలు",
+            "pages": ["nishabdham/abhiprayalu"]
+          },
+          {
+            "group": "🧑‍💼 అవిభక్తం",
+            "pages": ["nishabdham/avibhaktam"]
+          },
+          {
+            "group": "🧵 జ్ఞానం",
+            "pages": ["nishabdham/jnanam"]
+          },
+          {
+            "group": "🎬 సినిమా",
+            "pages": ["nishabdham/cinema"]
+          },
+          {
+            "group": "📖 కథా వస్తువులు",
+            "pages": ["nishabdham/katha-vastuvulu"]
+          },
+          {
+            "group": "📓 పుస్తకాలు",
+            "pages": ["nishabdham/pustakalu"]
           }
         ]
       },
